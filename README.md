@@ -36,19 +36,3 @@ If you are implementing the Roger Protocol in another programming language than 
 The `openapi.json` file can be found in multiple locations:
 * **Locally via npm:** Located under `../node_modules/@roger-protocol/specs/dist/openapi.json` after install
 * **Directly in GitHub:** Attached as a static asset under the GitHub Release of your choice
-
-## 3. Release Cycle
-The Roger Protocol does not follow a strict release schedule. Instead, features and bug fixes pile up in their dedicated minor version branches until they are tested and a new version is released. There are two distinct release workflows:
-
-### 3.1. Minor/Major Releases (`vX.0.0`/`vX.Y.0`)
-Minor and Major release s contain new features, upgrades, or breaking changes. They undergo a strict staging phase:
-
-* **Release Candidate (-rc):** Once a development branch is completed (e.g. `v1.2`), a staging branch named `release/v1.2.0-rc` is created and pushed to the NPM registry under a pre-release tag (e.g `v.1.2.0-rc.0`)
-* **Community Testing:** Developers using the Roger Protocol can then use the `-rc` npm package version to implement the new features and report bugs before the full release
-* **Production Promotion:** Once the release candidate is tested and approved, the `-rc` branch is merged into `main` automatically triggering the production launch
-
-### 3.2. Patch Releases (`vX.Y.Z`)
-Once a release candidate is merged into main, its corresponding development branch will not accept any other changes other than patches. Patches contain bug fixes, security fixes or various changes that do not introduce new features or breaking changes. They ignore the release candidate cycle:
-
-* **Critical Patches (High Priority):** When an issue is marked as critical, it is given a milestone and reviewed in priority so they reach the development branch faster. Once a critical patch is tested and merged into the development branch, maintainers will immediately open a PR to merge the patch into `main`
-* **Batched Patches (Normal Priority)**: Low severity patches are merged into the development branch where they accumulate with other patches. They are then merged to main on a regular basis to keep the package up to date
