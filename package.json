@@ -1,0 +1,29 @@
+{
+  "name": "@roger-protocol/specs",
+  "description": "Roger API specifications and standards",
+  "license": "Apache-2.0",
+  "author": "Valentin Artarit (https://github.com/OverDsh)",
+  "version": "1.0.0",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roger-protocol/roger-specs.git"
+  },
+  "keywords": [
+    "roger",
+    "roger-protocol",
+    "roblox",
+    "roblox-infrastructure",
+    "zod",
+    "openapi",
+    "protocol",
+    "specs"
+  ],
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
+  }
+}
