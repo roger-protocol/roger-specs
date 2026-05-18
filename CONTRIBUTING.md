@@ -62,7 +62,7 @@ Before making a Pull Request, ensure your changes are compliant with the followi
         billing: "src/features/billing/index.ts" // <-- Add your domain entrypoint like so
       }
     ```
-    * **Expose to the npm package:** Register your compiled files under the `exports` map inside of the [package.json](./package.json) file as shown bellow so developers can use clean paths like `@roger-protocol/specs/billing`
+    * **Expose to the npm package:** Register your compiled files under the `exports` map inside of the [package.json](./package.json) file as shown below so developers can use clean paths like `@roger-protocol/specs/billing`
     ```typescript
       "exports": {
         "./core": {
