@@ -23,6 +23,7 @@
     "specs"
   ],
   "devDependencies": {
+    "esbuild-plugin-tsconfig-paths": "^1.0.2",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3"
   }

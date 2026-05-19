@@ -1,4 +1,5 @@
 import { defineConfig } from "tsup";
+import { tsconfigPathsPlugin } from "esbuild-plugin-tsconfig-paths";
 
 export default defineConfig({
   entry: {
@@ -12,4 +13,5 @@ export default defineConfig({
   },
   clean: true,
   splitting: true,
+  esbuildPlugins: [tsconfigPathsPlugin()],
 });
