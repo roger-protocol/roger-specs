@@ -8,10 +8,9 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "declaration": true,
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    }
+      "@/*": ["./src/*"],
+    },
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "eslint.config.ts", "tsup.config.ts"],
 }
