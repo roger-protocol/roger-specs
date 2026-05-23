@@ -42,6 +42,10 @@ When working on your issue, you must name your branches using the following synt
 * **Documentation:** `docs/v1.3.2/fancy-icons`
 * **Breaking Changes:** `feat!/v2.0/auth-change`
 
+### 1.4. Commits Naming Convention
+To automate the release cycle and changelog generation, this projects uses [Release It!](https://github.com/release-it/release-it)
+Your commits MUST follow the [Conventional Commits Convention](https://www.conventionalcommits.org/) for them to be included in the changelog.
+
 ## 2. Architectural Guidelines
 
 ### 2.1. Import Boundaries
