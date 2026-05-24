@@ -35,5 +35,8 @@
   },
   "scripts": {
     "build": "npx tsup"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
