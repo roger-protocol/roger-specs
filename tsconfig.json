@@ -1,18 +1,7 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "strict": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "declaration": true,
-    "noEmit": true,
-    "paths": {
-      "@/*": ["./src/*"],
-    },
-    "allowImportingTsExtensions": true,
-  },
-  "include": ["src/**/*", "eslint.config.ts", "tsup.config.ts"],
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.src.json" },
+    { "path": "./tsconfig.scripts.json" },
+  ],
 }
