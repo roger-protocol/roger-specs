@@ -25,6 +25,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@release-it/conventional-changelog": "^11.0.0",
+    "@types/node": "^25.9.1",
     "esbuild-plugin-tsconfig-paths": "^1.0.2",
     "eslint": "^10.4.0",
     "jiti": "^2.7.0",
@@ -38,5 +39,9 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^8.5.0",
+    "zod": "^4.4.3"
+  }
 }
