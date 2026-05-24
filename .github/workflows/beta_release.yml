@@ -1,0 +1,66 @@
+name: Beta Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        type: boolean
+        description: Test the workflow without release
+        default: false
+      skip_npm:
+        type: boolean
+        description: Skip NPM Release
+        default: false
+      skip_git:
+        type: boolean
+        description: Skip git (no commits, no tags creation)
+      skip_github:
+        type: boolean
+        description: Skip GitHub Release
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  beta_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # Release-It needs to fetch all commits to generate the changelog file with the conventional-changelog plugin
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Build Package
+        run: npm run build
+
+      - name: Release Package to the Beta Channel
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IS_DRY_RUN: ${{ inputs.dry_run || false }}
+          SKIP_GIT: ${{ inputs.skip_git || false }}
+          SKIP_GITHUB: ${{ inputs.skip_github || false }}
+          SKIP_NPM: ${{ inputs.skip_npm || false }}
+        run: |
+          FLAGS=""
+
+          if [ "$IS_DRY_RUN" = "true" ]; then FLAGS="$FLAGS --dry-run"; fi
+          if [ "$SKIP_GIT" = "true" ]; then FLAGS="$FLAGS --no-git"; fi
+          if [ "$SKIP_GITHUB" = "true" ]; then FLAGS="$FLAGS --no-github"; fi
+          if [ "$SKIP_NPM" = "true" ]; then FLAGS="$FLAGS --no-npm"; fi
+
+          npx release-it --preRelease=beta --ci $FLAGS
