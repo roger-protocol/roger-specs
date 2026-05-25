@@ -59,8 +59,20 @@ Before making a Pull Request, ensure your changes are compliant with the followi
 
   * **Domain Creation:** If your changes introduce a completely new feature domain, you MUST connect it to our building pipeline using the following workflow (using a hypotetical new `billing` feature):
     * **Create the Domain Entrypoint:** Export all of your schemas cleanly via an `index.ts` file inside of your feature domain. (E.g. Create `index.ts` inside of `src/features/billing`, and export all of your files: `export * from ./file1; export * from ./file2`)
+    * **Register the Domain in the Base Index:** To be discovered by the OpenAPI generator script, your domain entrypoint must be imported directly inside `src/index.ts`:
+    ```typescript
+      // src/index.ts
+
+      // Core Domain
+      import "@/core/auth/index.ts"
+
+      // Features Domain
+      import "@/features/scheduling/index.ts"
+      import "@/features/billing/index.ts"
+    ```
     * **Register the Domain in the Bundler:** Before being packaged, all TypeScript files are compild into production JavaScript and type definitions (`*.d.ts`) inside the `/dist` folder using `tsup`. Therefore, you must register your newly created domain entrypoint in the `tsup.config.ts` file as following:
     ```typescript
+      // tsup.config.ts
       entry: {
         core: "src/core/index.ts"
         billing: "src/features/billing/index.ts" // <-- Add your domain entrypoint like so
@@ -68,6 +80,7 @@ Before making a Pull Request, ensure your changes are compliant with the followi
     ```
     * **Expose to the npm package:** Register your compiled files under the `exports` map inside of the [package.json](./package.json) file as shown below so developers can use clean paths like `@roger-protocol/specs/billing`
     ```typescript
+      // package.json
       "exports": {
         "./core": {
           "types": "./dist/core.d.ts",

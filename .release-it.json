@@ -8,9 +8,14 @@
   "npm": {
     "publish": true
   },
+  "hooks": {
+    "before:init": ["npm run lint"],
+    "after:bump": ["cross-env NODE_AUTH_TOKEN= GITHUB_TOKEN= npm run build"]
+  },
   "github": {
     "release": true,
-    "autoGenerate": true
+    "autoGenerate": true,
+    "assets": ["dist/openapi.json"]
   },
   "plugins": {
     "@release-it/conventional-changelog": {
