@@ -8,6 +8,10 @@
   "npm": {
     "publish": true
   },
+  "hooks": {
+    "before:init": ["npm run lint"],
+    "after:bump": ["npm run build"]
+  },
   "github": {
     "release": true,
     "autoGenerate": true
