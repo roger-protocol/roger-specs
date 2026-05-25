@@ -10,7 +10,7 @@
   },
   "hooks": {
     "before:init": ["npm run lint"],
-    "after:bump": ["npm run build"]
+    "after:bump": ["cross-env NODE_AUTH_TOKEN= GITHUB_TOKEN= npm run build"]
   },
   "github": {
     "release": true,
