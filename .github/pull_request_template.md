@@ -7,6 +7,7 @@ Provide a brief summary of the schemas or fixes introduced by this PR.
 - [ ] Patch (non-breaking changes which fixes an issue)
 - [ ] Minor (non-breaking changes which adds/modify a feature)
 - [ ] Major (fix or feature that introduces breaking changes)
+- [ ] Infra / Chore (non-breaking changes to the infrastructure, dependencies or documentation)
 
 **PR Checklist**
 - [ ] I have checked that this PR isn't a duplicate
