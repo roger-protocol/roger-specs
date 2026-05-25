@@ -14,7 +14,8 @@
   },
   "github": {
     "release": true,
-    "autoGenerate": true
+    "autoGenerate": true,
+    "assets": ["dist/openapi.json"]
   },
   "plugins": {
     "@release-it/conventional-changelog": {
