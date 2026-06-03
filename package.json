@@ -1,5 +1,8 @@
 {
   "name": "@roger-protocol/specs",
+  "workspaces": [
+    "apps/roger-docs"
+  ],
   "description": "Roger API specifications and standards",
   "license": "Apache-2.0",
   "author": "Valentin Artarit (https://github.com/OverDsh)",
@@ -38,7 +41,10 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "build": "tsup && tsx --tsconfig ./tsconfig.scripts.json ./scripts/generate-openapi.ts"
+    "openapi:build": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/generate-openapi.ts",
+    "build": "tsup && npm run openapi:build",
+    "docs": "npm run openapi:build && npm run dev --workspace=apps/roger-docs",
+    "docs:build": "npm run openapi:build && npm run build --workspace=apps/roger-docs"
   },
   "files": [
     "dist"
