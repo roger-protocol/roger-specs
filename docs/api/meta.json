@@ -1,6 +1,6 @@
 {
   "title": "API Reference",
-  "icon": "Blocks",
+  "icon": "Satellite",
   "description": "Auto-generated OpenAPI specifications",
   "root": true,
   "pages": ["index", "...(generated)"]
