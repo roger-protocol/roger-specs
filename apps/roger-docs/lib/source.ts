@@ -1,12 +1,20 @@
 import { docs } from 'collections/server';
 import { loader } from 'fumadocs-core/source';
 import { docsContentRoute, docsImageRoute, docsRoute } from './shared';
+import { icons } from 'lucide-react';
+import { createElement } from 'react';
+import { openapiPlugin } from 'fumadocs-openapi/server';
 
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
+  icon(icon) {
+    if (!icon || !(icon in icons)) return
+    return createElement(icons[icon as keyof typeof icons])
+
+  },
   baseUrl: docsRoute,
   source: docs.toFumadocsSource(),
-  plugins: [],
+  plugins: [openapiPlugin()],
 });
 
 export function getPageImage(page: (typeof source)['$inferPage']) {
