@@ -42,3 +42,9 @@ export async function getLLMText(page: (typeof source)['$inferPage']) {
 
 ${processed}`;
 }
+
+export function getSection(path: string | undefined) {
+  if (!path) return 'protocol';
+  const [dir] = path.replaceAll(/[()]/g, "").split('/', 1);
+  return dir
+}
