@@ -1,0 +1,7 @@
+{
+  "title": "API Reference",
+  "icon": "Blocks",
+  "description": "Auto-generated OpenAPI specifications",
+  "root": true,
+  "pages": ["index", "...(generated)"]
+}
