@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+@import 'fumadocs-openapi/css/preset.css';
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}
+
+.protocol {
+    --color-fd-primary: var(--protocol-color)
+}
+
+.api {
+    --color-fd-primary: var(--api-color)
+}
+
+:root {
+    --protocol-color: hsl(29, 100%, 75%);
+    --api-color: hsl(224, 100%, 75%);
+}
