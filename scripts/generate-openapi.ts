@@ -1,4 +1,5 @@
 import { apiRegistry } from "@/shared/openapi.js";
+import { tagRegistry } from "@/shared/tags.js";
 import packageJson from "../package.json" with { type: "json" };
 import { OpenApiGeneratorV3 } from "@asteasolutions/zod-to-openapi";
 import { writeFile } from "node:fs/promises";
@@ -35,6 +36,8 @@ async function buildOpenAPI() {
       version: RELEASE_VERSION,
     },
   }) satisfies object;
+
+  OpenAPIDocument.tags = Array.from(tagRegistry, ([name, description]) => ({ name, description }));
 
   await writeFile(
     new URL("../dist/openapi.json", import.meta.url),
