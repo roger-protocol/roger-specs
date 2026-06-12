@@ -10,6 +10,7 @@
 /out/
 /build
 *.tsbuildinfo
+/public/openapi.json
 
 # misc
 .DS_Store
