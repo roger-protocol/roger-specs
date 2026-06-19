@@ -1,0 +1,123 @@
+---
+title: Contribution Workflow
+description: Branching strategy, PR requirements, and commit conventions
+icon: Workflow
+---
+
+To maintain stability and clarity, this project follows a structured contribution workflow.
+
+## Versioning & Branching Strategy
+
+We use [Semantic Versioning](https://semver.org/) (e.g., `v1.2.3`) and organize development by **minor version branches**.
+
+### Milestone Assignment
+
+When you open a GitHub issue, a maintainer will assign a milestone based on the type of change:
+
+| Change Type     | Milestone Example | Target Branch |
+| --------------- | ----------------- | ------------- |
+| Bug / Patch     | `v1.1.2`          | `v1.1`        |
+| New Feature     | `v1.1` -> `v1.2`  | `v1.2`        |
+| Breaking Change | `v1.1` -> `v2.0`  | `v2.0`        |
+
+### Creating Your Branch
+
+**Branch Naming Convention:** `type/version/short-description`
+
+```bash
+# Features
+git checkout -b feat/v1.3/cool-feature
+
+# Bug fixes
+git checkout -b fix/v1.3.1/api-timeout
+
+# Documentation
+git checkout -b docs/v1.3.2/installation-guide
+
+# Breaking changes
+git checkout -b feat!/v2.0/auth-overhaul
+```
+
+### What if the target branch doesn't exist yet?
+
+1. Create your local branch from the closest version behind it
+   ```bash
+   git checkout v1.3
+   git checkout -b feat/v1.4/my-feature  # Branch locally from v1.3
+   ```
+2. Once ready for PR, ask a maintainer in the issue to create the official branch
+3. **Before creating the PR**, sync with the official branch:
+   ```bash
+   git fetch upstream
+   git rebase upstream/v1.4
+   ```
+
+## Commits & Pull Requests
+
+### Commit Message Convention
+
+We use the [Conventional Commits](https://www.conventionalcommits.org/) format to automate the changelog generation. Your commits **MUST** follow this format:
+
+```
+type: description
+
+body (optional)
+```
+
+**Types:**
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `docs:` - Documentation
+- `refactor:` - Code refactoring
+- `test:` - Adding tests
+- `chore:` - Maintenance
+
+**Examples:**
+```bash
+git commit -m "feat: add session validation"
+git commit -m "fix: resolve race condition in deployments"
+git commit -m "docs: update workflow guide"
+```
+
+### Before Opening a PR
+
+Ensure your changes include:
+
+1. **Updated Documentation** - If adding/modifying features, update `/docs`
+2. **Proper Structure** - Follow import boundaries and project structure
+3. **Domain Registration** - If creating a new domain, follow the [domain creation guide](/docs/contributing/domain-creation)
+
+## Architectural Guidelines
+
+### Import Boundaries
+
+When creating a feature, you should not import anything from any optional features and you should not assume that a node implements an optional feature. You may import from core features since we can assume they are implemented in every node.
+
+**Example of INVALID code:**
+```ts title="src/features/billing/payment.ts"
+import { getMetricsBody } from "@/features/analytics"; // Invalid! Features can't import from other Features
+```
+
+```ts title="src/core/auth/login.ts"
+import { chargeUserResponse } from "@/features/billing" // Invalid! Core features can't import from optional features
+```
+
+**Example of VALID code:**
+```ts title="src/core/auth/index.ts"
+import { CounterMetric } from "@/shared/metrics"; // Valid! Core can import from Shared
+```
+
+```ts title="src/features/billing/payment.ts"
+import { User } from "@/core/auth" // Valid! Features can import from Core
+```
+
+## Release Cycle
+
+We use [Release It!](https://github.com/release-it/release-it) for automated releases:
+
+1. **All merged PRs** on a version branch are included in the next patch/minor release
+2. **Changelog is auto-generated** from Conventional Commits
+3. **Tags and releases** are created automatically
+4. **npm packages** are published automatically
+
+For this to work, **your commits must follow the [Conventional Commits](/docs/contributing/workflow#commit-message-convention) format**.
