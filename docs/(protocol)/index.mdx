@@ -1,13 +1,32 @@
 ---
-title: Hello World
-description: Your first document
+title: What is Roger Protocol
+description: The Roger Protocol, an open source federated protocol for Roblox developers
+icon: Book
 ---
 
-Welcome to the docs! You can start writing documents in `/content/docs`.
+## Introduction
 
-## What is Next?
+The Roger Protocol is an open source protocol relying on HTTP aiming to help Roblox developers manage their game updates.
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.dev" />
-</Cards>
+It was originally made as a website under the name of rManager to schedule game updates, feature that Roblox still haven't shipped yet, but it has been archived in favor of a federated protocol that will be able to be expanded to cover much more features.
+
+Here, we will refer to servers hosting an http server supporting the roger protocol as a node, and we will refer to any sort of tooling enabling the user to interact with nodes as a client.
+
+## Philosophy
+
+### Federated and Open Source
+The Roger Protocol is federated, which means everyone can equally participate in it. You are free to use the node you want, with the client you want (as long as they support the same versions). You can host your own private node for only you and your collaborators, host a public node for everyone to use, or use the node of someone else! It is also open sourced under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0), to let everyone use this protocol freely without worrying about using copyrighted assets.
+
+### Open to Everyone
+It should be seen as a secondary Roblox Creator Hub, defining many features that Roblox doesn't have and aiming to offer a better developer experience accessible to every Roblox developer.
+
+## Key Concepts
+
+### What "Federated" means in practice
+Concretely, this protocol being federated means that you will be able to chose what node you connect to in your client of choice using it's URL. Data isn't shared between nodes though, if you switch node your data won't transfer. Collaborating must happen between users of a same node.
+
+### Core vs Optional Features
+In this protocol, features are distinguished in two categories: core and optional. Core features must be implemented imperatively by each node (things like auth, deployments etc...) while optional features may be implemented by the node owner. Each node must have a /capabilities route where they must define their supported optional features so clients can know which features they can use.
+
+### Versioning
+This project uses [Semantic Versioning](https://semver.org/). Routes are automatically versioned in the API Reference using the current major version. For example, if the current version is v3.4.2, routes will be registered under /api/v3/... (except the /capabilities route which isn't versioned)
