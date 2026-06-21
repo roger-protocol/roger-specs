@@ -1,0 +1,40 @@
+---
+title: Contributing to the Roger Protocol
+description: Guidelines for contributing to the Roger Protocol specifications
+icon: Heart
+---
+import { Workflow, LayersPlus, Satellite } from "lucide-react"
+
+
+Thank you for helping build the Roger Protocol! This section contains everything you need to know to contribute effectively.
+
+## Before You Start
+
+Make sure you're familiar with:
+- [Conventional Commits](https://www.conventionalcommits.org/) (how commits must be written)
+- [Semantic Versioning](https://semver.org/) (how we version releases)
+- [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119) (the key words MUST, SHOULD, etc.)
+
+## Core Principles
+
+### Federated First
+Every feature should be designed with federation in mind. Changes should not assume a single-node setup.
+
+### Backward Compatibility
+All features must maintain backward compatibility in patch/minor versions. Breaking changes only happen in major versions.
+
+### Type Safety
+All route definitions use Zod schemas for type safety. The OpenAPI spec is auto-generated from these schemas.
+
+### Module Boundaries
+Keep the codebase modular:
+- Core features **cannot** import from optional features
+- Optional features are decoupled and cannot import from other features
+
+## Quick Links
+
+<Cards>
+    <Card href="/docs/contributing/workflow" title="Contribution Workflow" icon={<Workflow />}>Branching, PRs, and commit conventions</Card>
+    <Card href="/docs/contributing/domain-creation" title="Creating a New Feature Domain" icon={<LayersPlus />}>Complete guide to adding features</Card>
+    <Card href="/docs/contributing/writing-routes" title="Writing Routes for OpenAPI" icon={<Satellite />}>How to define routes using the shared utilities</Card>
+</Cards>

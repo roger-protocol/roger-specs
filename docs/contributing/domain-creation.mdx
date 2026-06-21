@@ -1,0 +1,206 @@
+---
+title: Creating a New Feature Domain
+description: Step-by-step guide to create and register a new feature domain
+icon: LayersPlus
+---
+
+import { Step, Steps, CodeBlock } from 'fumadocs-ui/components/steps';
+
+This guide walks you through adding a completely new feature domain to the Roger Protocol.
+
+## Overview
+
+When you create a new feature domain, you need to:
+
+1. Create the domain folder structure
+2. Write routes and schemas
+3. Create a domain entrypoint (`index.ts`)
+4. Register in the build system
+5. Expose in the npm package
+6. Add documentation
+
+## Step-by-Step Guide
+<Steps>
+<Step>
+### Create the Domain Folder Structure
+
+For a new feature called `billing`, create:
+
+```
+src/features/billing/
+├── index.ts             # Domain entrypoint (exports everything)
+└── ...
+```
+
+For a new core feature called `deployments`, create:
+
+```
+src/core/deployments/
+├── index.ts             # Domain entrypoint
+└── ...
+```
+
+</Step>
+<Step>
+### Write Your Routes and Schemas
+
+See the [Writing Routes for OpenAPI](/docs/contributing/writing-routes) guide
+
+</Step>
+<Step>
+### Create the Domain Entrypoint
+
+Export all schemas and types from your domain:
+
+```ts title="src/features/billing/index.ts"
+export * from "./payments";
+export * from "./subscriptions";;
+```
+This way, routes are correctly registered during the openapi file generation, and they are included in the npm package under a single import route (in this case: `@roger-protocol/specs/features/billing`)
+
+</Step>
+<Step>
+### Register in `src/index.ts`
+
+Import your domain so routes are discovered during build and registered with apiRegistry:
+
+```ts title="src/index.ts"
+// Core Domain
+import "@/core/deployments/index.ts";
+
+// Features Domain
+import "@/features/billing/index.ts";     // <- Add your domain
+import "@/features/scheduling/index.ts";
+```
+
+</Step>
+<Step>
+### Register in Build System (`tsup.config.ts`)
+
+Add your domain to the bundler entry points:
+
+```ts title="tsup.config.ts"
+export default defineConfig({
+  entry: {
+    deployments: "src/core/deployments/index.ts",
+    billing: "src/features/billing/index.ts",     // <- Add your domain (without using the @ alias)
+    scheduling: "src/features/scheduling/index.ts",
+  },
+});
+```
+
+</Step>
+<Step>
+### Expose in npm Package (`package.json`)
+
+Register your compiled domain in the exports map so consumers can import cleanly:
+
+```json title="package.json"
+{
+  "exports": {
+    "./core/deployments": {
+      "types": "./dist/deployments.d.ts",
+      "import": "./dist/deployments.js",
+      "require": "./dist/deployments.cjs"
+    },
+    "./billing": {
+      "types": "./dist/billing.d.ts",
+      "import": "./dist/billing.js",
+      "require": "./dist/billing.cjs"
+    },
+    "./scheduling": {
+      "types": "./dist/scheduling.d.ts",
+      "import": "./dist/scheduling.js",
+      "require": "./dist/scheduling.cjs"
+    }
+  }
+}
+```
+<Callout type="warn">**Always indicate types first !**</Callout>
+
+</Step>
+<Step>
+### Add Documentation
+
+Create a documentation file for your domain:
+
+```
+docs/(protocol)/features/billing.mdx
+```
+
+or
+
+```
+docs/(protocol)/core/deployments.mdx
+```
+
+Include:
+- What the feature does
+- Use cases
+- Key endpoints
+- Example usage
+
+</Step>
+</Steps>
+## Complete Example: Billing Feature
+
+Here's what the complete file structure looks like after adding billing:
+
+```
+src/features/billing/
+├── index.ts
+├── payments.ts          (chargeSchema, charge endpoint)
+├── subscriptions.ts     (subscriptionSchema, manage subscriptions)
+└── types.ts             (shared types)
+
+docs/(protocol)/features/
+└── billing.mdx          (documentation)
+```
+
+```ts title="src/features/billing/index.ts"
+export * from "./payments";
+export * from "./subscriptions";
+```
+
+```ts title="src/index.ts"
+import "@/core/auth/index.ts";
+import "@/features/billing/index.ts";  // ← Added
+```
+
+```ts title="tsup.config.ts"
+entry: {
+  billing: "src/features/billing/index.ts",  // ← Added
+}
+```
+
+```json title="package.json"
+"exports": {
+  "./billing": {                              // ← Added
+    "types": "./dist/billing.d.ts",
+    "import": "./dist/billing.js",
+    "require": "./dist/billing.cjs"
+  }
+}
+```
+
+## Build & Test
+
+```bash
+# Lint
+npm run lint
+
+# Ensure everything builds
+npm run build
+
+# Verify npm exports everything correctly
+npm pack
+```
+
+## Import Boundaries
+
+Remember:
+- **Core domains** cannot import from features
+- **Feature domains** cannot import from core or other features
+- All domains can import from `/src/shared`
+
+If your new domain needs logic that other domains also need, move it to `/src/shared` first.

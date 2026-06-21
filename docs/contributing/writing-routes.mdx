@@ -1,0 +1,157 @@
+---
+title: Writing Routes for OpenAPI
+description: How to use shared utilities to define type-safe, OpenAPI-compatible routes
+icon: Satellite
+---
+The OpenAPI file is extermeley important. It is used to generate the API Reference documentation, and type-safe SDKs for people using languages other than JavaScript/TypeScript. This guide will walk you through on how to write and define routes compatible with our OpenAPI generation pipeline.
+
+## Overview
+This project uses [Zod V4](https://v4.zod.dev/) to define type-safe request params, bodies and responses schemas, as well as the [zod-to-openapi](https://github.com/asteasolutions/zod-to-openapi) package to formalize those schemas into routes and generate an openapi file from those routes. Make sure you are familiar with both of these packages since they will be widely used accross the whole protocol.
+
+## Writing Schemas
+Schemas can be used to define the requests bodies, responses and URL params. It is **imperative** that you provide a description to be displayed in the documentation **for each entries** inside of those schemas using the `.openapi` method. You may also use the `.openapi` method to register a schema as a reusable component.
+
+### Example
+
+```ts title="src/core/auth/index.ts"
+import { z } from "zod"
+
+export const User = z
+  .object({
+    id: z.string().openapi({ description: "The unique identifier of the user", example: "123456789abcdef"}), // <- You can even include an example!
+    name: z.string().openapi({ description: "The username of the user", example: "John Doe"}),
+    email: z.email().openapi({ description: "The email of the user", example: "johndoe@acme.corp"})
+  })
+  .openapi("User") // Since this schema will be reused in multiple routes, we should define it as a component whose name is "User"
+
+export const CreateAccountSchema = z
+  .object({
+    name: z.string().openapi({ description: "The username of the user", example: "John Doe"}),
+    email: z.email().openapi({ description: "The email of the user", example: "johndoe@acme.corp"}),
+    password: z.string().min(6).openapi({ description: "The password of the user (minimum 6 characters)", example: "superstrongpassword"})
+  }) // This schema is just a route that will not be reused so we shouldn't define it as a component
+```
+
+## Creating a Tag
+In the API Reference, routes are organized under collapsible categories. To determine the category of a route, **each route must be tagged:** if a route is not tagged **it won't be displayed in the API Reference**. Each tag should be exported as a constant and created using the `createTag` utility in `src/shared/tags.ts`.
+
+### Properties
+
+`createTag(tagName, tagDescription)` :
+| Property         | Type     | Description                                            |
+| ---------------- | -------- | ------------------------------------------------------ |
+| `tagName`        | `string` | The tag name that will be used in the OpenAPI document |
+| `tagDescription` | `string` | The tag description (what routes it should be put on)  |
+
+### Example
+```ts title="src/core/auth/index.ts"
+import { createTag } from "@/shared/tags"
+
+export const AuthTag = createTag("Auth", "All auth related endpoints")
+```
+
+## Defining an Error Schema
+To ensure a standardized error structure accross every API calls so clients can parse errors predictably, every domain endpoint must satisfy the same response layout when throwing an error. Each domain should expose an error schema containing all possible error codes it is capable of throwing. To create an error schema, you should use the `createErrorSchema` helper inside of `src/shared/errors.ts`.
+
+### Properties
+
+`createErrorSchema(id, codes)` :
+| Property         | Type       | Description                                                                                                         |
+| ---------------- | ---------- | ------------------------------------------------------------------------------------------------------------------- |
+| `id`             | `string`   | The unique component registration id that will be used to identify this schema inside of the generated OpenAPI file |
+| `codes`          | `string[]` | An array containing all of the error strings that this schema is capable of throwing                                |
+
+### Example
+```ts title="src/core/auth/index.ts"
+import { createErrorSchema } from "@/shared/errors"
+
+export const AuthError = createErrorSchema("AuthError", [
+  "UNAUTHORIZED",
+  "INVALID_TOKEN",
+  "USER_NOT_FOUND",
+  "TOKEN_EXPIRED"
+])
+```
+
+## Declaring a Route
+Once you have setup a tag and an error schema for your domain and created the necessary schemas for a route (body, response, url params), you must declare that route using the `registerPath` method inside of the `apiRegistry` object in `src/shared/openapi.ts`. To know how to use that method, please refer to the [Defining routes & webhooks](https://github.com/asteasolutions/zod-to-openapi#defining-routes--webhooks) section of the [zod-to-openapi](https://github.com/asteasolutions/zod-to-openapi) docs
+
+### Using Tags
+```ts title="src/core/auth/index.ts"
+import { apiRegistry } from "@/shared/openapi";
+
+apiRegistry.registerPath({
+  method: "get",
+  path: "/auth/token",
+  description: "Exange Code Verifier (PKCE) and Authorization Code for a session token",
+  tags: [AuthTag] // <- Use the AuthTag constant here, you may put multiple tags
+})
+```
+
+
+### Using Error Schemas
+```ts title="src/core/auth/index.ts"
+import { apiRegistry } from "@/shared/openapi";
+import { composeError } from "@/shared/errors";
+
+apiRegistry.registerPath({
+  method: "get",
+  path: "/auth/token",
+  description: "Exange Code Verifier (PKCE) and Authorization Code for a session token",
+  tags: [AuthTag],
+  responses: {
+    ...
+    401: composeError("The given token is invalid", [AuthError]) // <- You can pass multiple error schemas
+  }
+})
+```
+
+### Full Example
+```ts title="src/core/auth/index.ts"
+import { z } from "zod";
+import { apiRegistry } from "@/shared/openapi";
+import { createErrorSchema, composeError } from "@/shared/errors";
+import { createTag } from "@/shared/tags";
+
+export const AuthTag = createTag("Auth", "All auth related endpoints")
+export const AuthError = createErrorSchema("AuthError", [
+  "UNAUTHORIZED",
+  "INVALID_TOKEN",
+  "USER_NOT_FOUND",
+  "TOKEN_EXPIRED"
+])
+
+const GetOAuthTokenBody = z.object({
+  code_verifier: z.string().openapi({ description: "A random cryptographic string generated by the client" }),
+  authorization_code: z.string().openapi({ description: "A temporary code given by the node that is exanged for a session token"})
+})
+const GetOAuthTokenResponse = z.object({
+  session_token: z.string().openapi({ description: "A long-lived session token used to authenticate the user" }),
+})
+
+apiRegistry.registerPath({
+  method: "get",
+  path: "/auth/token",
+  description: "Exange Code Verifier and Authorization Code for a session token (PKCE Flow)",
+  tags: [AuthTag],
+  request: {
+    body: {
+      description: "The code verifier and authorization code to exange",
+      "application/json": {
+        schema: GetOAuthTokenBody
+      }
+    }
+  },
+  responses: {
+    200: {
+      description: "Operation successful",
+      content: {
+        "application/json": {
+          schema: GetOAuthTokenResponse
+        }
+      }
+    },
+    401: composeError("The given token is invalid", [AuthError]) // <- You can pass multiple error schemas
+  }
+})
+```

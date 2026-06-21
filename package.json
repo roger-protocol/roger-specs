@@ -44,7 +44,7 @@
     "openapi:build": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/generate-openapi.ts",
     "build": "tsup && npm run openapi:build",
     "docs": "npm run dev --workspace=apps/roger-docs",
-    "docs:build": "npm run openapi:build && npm run build --workspace=apps/roger-docs",
+    "docs:build": "npm run docs:gen-openapi-docs && npm run build --workspace=apps/roger-docs",
     "docs:start": "npm run start --workspace=roger-docs",
     "docs:gen-openapi-docs": "npm run openapi:build && npm run openapi:gen-docs --workspace=apps/roger-docs"
   },

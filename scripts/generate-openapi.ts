@@ -3,6 +3,11 @@ import { tagRegistry } from "@/shared/tags.js";
 import packageJson from "../package.json" with { type: "json" };
 import { OpenApiGeneratorV3 } from "@asteasolutions/zod-to-openapi";
 import { writeFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { mkdir } from "node:fs/promises";
+
+const distTarget = join(process.cwd(), "dist", "openapi.json");
+const docsTarget = join(process.cwd(), "apps", "roger-docs", "public", "openapi.json");
 
 async function buildOpenAPI() {
   const RELEASE_VERSION = packageJson.version;
@@ -39,12 +44,21 @@ async function buildOpenAPI() {
 
   OpenAPIDocument.tags = Array.from(tagRegistry, ([name, description]) => ({ name, description }));
 
-  await writeFile(
-    new URL("../dist/openapi.json", import.meta.url),
-    JSON.stringify(OpenAPIDocument, null, 2),
-    "utf-8",
-  );
-  console.log(`[OpenAPI]: Successfully generated openapi.json under /dist/openapi.json.`);
+  console.log("[OpenAPI]: Creating directories...");
+  await Promise.all([
+    mkdir(dirname(distTarget), { recursive: true }),
+    mkdir(dirname(docsTarget), { recursive: true }),
+  ]);
+
+  console.log("[OpenAPI]: Writing files...");
+  await Promise.all([
+    writeFile(distTarget, JSON.stringify(OpenAPIDocument, null, 2), "utf-8").then(() => {
+      console.log(`[OpenAPI]: Successfully wrote openapi.json in ${dirname(distTarget)}`);
+    }),
+    writeFile(docsTarget, JSON.stringify(OpenAPIDocument, null, 2), "utf-8").then(() => {
+      console.log(`[OpenAPI]: Successfully wrote openapi.json in ${dirname(docsTarget)}`);
+    }),
+  ]);
 }
 
 await buildOpenAPI();
