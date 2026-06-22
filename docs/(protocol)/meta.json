@@ -3,5 +3,11 @@
   "icon": "Building",
   "description": "The complete protocol in-depth documentation",
   "root": true,
-  "pages": ["---Introduction---", "index", "quick-start"]
+  "pages": [
+    "---Introduction---",
+    "index",
+    "quick-start",
+    "---Core Features---",
+    "...core"
+  ]
 }
