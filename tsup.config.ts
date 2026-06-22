@@ -1,9 +1,8 @@
 import { defineConfig } from "tsup";
-import { tsconfigPathsPlugin } from "esbuild-plugin-tsconfig-paths";
 
 export default defineConfig({
   entry: {
-    core: "src/core/index.ts",
+    version: "src/core/version/index.ts",
   },
   format: ["esm", "cjs"],
   dts: {
@@ -13,5 +12,5 @@ export default defineConfig({
   },
   clean: true,
   splitting: true,
-  esbuildPlugins: [tsconfigPathsPlugin()],
+  tsconfig: "tsconfig.src.json",
 });

@@ -1,2 +1,2 @@
-// Core Domain
-import "@/core/index";
+// Core Features
+import "@/core/version";
