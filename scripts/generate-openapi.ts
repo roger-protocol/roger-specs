@@ -9,6 +9,8 @@ import { mkdir } from "node:fs/promises";
 const distTarget = join(process.cwd(), "dist", "openapi.json");
 const docsTarget = join(process.cwd(), "apps", "roger-docs", "public", "openapi.json");
 
+const ignoreVersioning = new Set(["/version"]);
+
 async function buildOpenAPI() {
   const RELEASE_VERSION = packageJson.version;
   const majorVersion = `v${RELEASE_VERSION.split(".")[0]}`;
@@ -26,6 +28,7 @@ async function buildOpenAPI() {
   const versionedRoutes = apiRegistry.definitions.map((def) => {
     if (def.type === "route") {
       const cleanPath = def.route.path.startsWith("/") ? def.route.path : `/${def.route.path}`; // Ensure route is in the format /route (billing/card -> /billing/card)
+      if (ignoreVersioning.has(cleanPath)) return def;
       return { ...def, route: { ...def.route, path: `/api/${majorVersion}${cleanPath}` } }; // Append /api/v# at the start of each route (/billing -> /api/v1/billing)
     } else {
       return def;
