@@ -4,7 +4,13 @@ import tseslint from "typescript-eslint";
 
 export default defineConfig(
   {
-    ignores: ["dist/**", "node_modules/**"],
+    ignores: [
+      "dist/**",
+      "**/node_modules/**",
+      "apps/roger-docs/.next/**",
+      "apps/roger-docs/out/**",
+      "docs/api/(generated)/**",
+    ],
   },
   js.configs.recommended,
   tseslint.configs.strictTypeChecked,

@@ -2,7 +2,7 @@ import { apiRegistry } from "@/shared/openapi";
 import { createTag } from "@/shared/tags";
 import z from "zod";
 
-export const VersionTag = createTag("Version", "Node's version informations");
+export const VersionTag = createTag("Version", "Node's version information");
 
 export const VersionResponse = z.object({
   name: z.string().openapi({ description: "The node's name", example: "My Roger Node" }),
