@@ -30,7 +30,6 @@
     "@release-it/conventional-changelog": "^11.0.0",
     "@types/node": "^25.9.1",
     "cross-env": "^10.1.0",
-    "esbuild-plugin-tsconfig-paths": "^1.0.2",
     "eslint": "^10.4.0",
     "jiti": "^2.7.0",
     "release-it": "^20.0.1",
@@ -40,7 +39,7 @@
     "typescript-eslint": "^8.59.4"
   },
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint src scripts",
     "openapi:build": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/generate-openapi.ts",
     "build": "tsup && npm run openapi:build",
     "docs": "npm run dev --workspace=apps/roger-docs",
@@ -52,6 +51,11 @@
     "dist"
   ],
   "exports": {
+    "./core/version": {
+      "types": "./dist/version.d.ts",
+      "import": "./dist/version.js",
+      "require": "./dist/version.cjs"
+    },
     "./openapi.json": "./dist/openapi.json"
   },
   "dependencies": {

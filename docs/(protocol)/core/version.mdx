@@ -1,0 +1,23 @@
+---
+title: Version Endpoint
+description: An endpoint to get information about a node, including its version
+icon: Info
+---
+
+## Overview
+The `/version` endpoint is the **entry point** for every client connecting to a Roger node. It returns the node's current version and supported versions as well as metadata like the node's name and an optional node description, allowing clients to determine if they are compatible with the target node before making any subsequent requests
+
+## When to use it
+- **On initial connection:** You should call this endpoint first before making any other requests to a Roger node to determine compatibility and eventually show a compatibility warning to the user
+- **After a 4xx/5xx error:** If a request fails with an unknown error, you should re-fetch the node version to check if there have been updates since the last version check.
+
+## Client best practices
+- **Cache the response:** A node version rarely changes, you should cache the response for the entire session
+- **On incompatibility:** You should show a clear warning to the user if the client isn't compatible with the target node and show the version mismatch (e.g. "This client isn't compatible with the target node (Client: v1.0.3 | Node: v3.2.2)")
+
+## Notes
+- The `/version` route is not versioned, it isn't prefixed by `/api/v#` and can be found directly under `/version`
+- A node might support multiple major version of the protocol at the same time (e.g. `/api/v1` and `/api/v2`). The node must include them in the response under the `supported_versions` field (e.g. `"supported_versions": ["v1", "v2"]`)
+
+## Quick Links
+<Card href="/docs/api/version/version/get" title="Version API Reference">The API Reference for the `/version` route</Card>
