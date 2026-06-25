@@ -6,7 +6,7 @@ export const VersionTag = createTag("Version", "Node's version informations");
 
 export const VersionResponse = z.object({
   name: z.string().openapi({ description: "The node's name", example: "My Roger Node" }),
-  description: z
+  node_description: z
     .string()
     .optional()
     .openapi({ description: "An optional node description", example: "Private node of Acme Corp" }),

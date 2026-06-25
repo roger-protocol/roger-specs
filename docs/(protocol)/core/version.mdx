@@ -5,7 +5,7 @@ icon: Info
 ---
 
 ## Overview
-The `/version` endpoint is the **entry point** for every client connecting to a Roger node. It returns the node's current version and supported versions as well as metadata like the node's name and an optional description, allowing clients to determine if they are compatible with the target node before making any subsequent requests
+The `/version` endpoint is the **entry point** for every client connecting to a Roger node. It returns the node's current version and supported versions as well as metadata like the node's name and an optional node description, allowing clients to determine if they are compatible with the target node before making any subsequent requests
 
 ## When to use it
 - **On initial connection:** You should call this endpoint first before making any other requests to a Roger node to determine compatibility and eventually show a compatibility warning to the user
