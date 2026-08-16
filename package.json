@@ -56,6 +56,11 @@
       "import": "./dist/version.js",
       "require": "./dist/version.cjs"
     },
+    "./core/features": {
+      "types": "./dist/features.d.ts",
+      "import": "./dist/features.js",
+      "require": "./dist/features.cjs"
+    },
     "./openapi.json": "./dist/openapi.json"
   },
   "dependencies": {
