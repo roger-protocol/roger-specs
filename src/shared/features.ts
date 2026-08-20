@@ -10,7 +10,7 @@ import z from "zod";
  * Each configuration entry must be clearly documented using the .openapi() method (refer to the "Writing Schemas" section of the "Writing Routes for OpenAPI" guide)
  *
  * @example
- * export const FeatureMap: Record<string, z.ZodType> = {
+ * export const FeatureRegistry: Record<string, z.ZodType> = {
  *   "core:auth": z.object({
  *     maxUsernameLenght: z
  *       .int()
