@@ -48,6 +48,35 @@ See the [Writing Routes for OpenAPI](/docs/contributing/writing-routes) guide
 
 </Step>
 <Step>
+### Register your feature in the FeatureRegistry (`src/shared/features.ts`)
+
+Declare your feature name and configuration in the FeatureRegistry:
+```ts title="src/shared/features.ts"
+import z from "zod";
+export const FeatureRegistry: Record<string, z.ZodType> = {
+  "core:auth": z.object({
+    maxUsernameLenght: z
+      .int()
+      .positive()
+      .default(32)
+      .openapi({ description: "The maximum lenght of a username", example: 32 }),
+  }),
+  scheduling: z
+    .object({
+      maxScheduledTasks: z
+        .int()
+        .positive()
+        .openapi({
+          description: "The maximum amount of tasks an account can schedule simultaneously",
+          example: 3,
+        }),
+    })
+    .optional(),
+};
+```
+<Callout>Core features must be prefixed with `core:`</Callout>
+</Step>
+<Step>
 ### Create the Domain Entrypoint
 
 Export all schemas and types from your domain:
