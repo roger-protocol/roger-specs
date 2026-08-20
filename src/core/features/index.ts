@@ -3,7 +3,7 @@ import { createTag } from "@/shared/tags";
 import { FeatureRegistry } from "@/shared/features";
 import { apiRegistry } from "@/shared/openapi";
 
-export const FeatureTag = createTag("Feature", "Feature related endpoints");
+export const FeatureTag = createTag("Features", "Features related endpoints");
 
 export const FeatureResponse = z.object({
   features: z.object(FeatureRegistry),
