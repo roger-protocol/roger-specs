@@ -61,6 +61,11 @@
       "import": "./dist/features.js",
       "require": "./dist/features.cjs"
     },
+    "./core/auth": {
+      "types": "./dist/auth.d.ts",
+      "import": "./dist/auth.js",
+      "require": "./dist/auth.cjs"
+    },
     "./openapi.json": "./dist/openapi.json"
   },
   "dependencies": {
