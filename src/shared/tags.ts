@@ -24,3 +24,5 @@ export function createTag<const T extends string>(tagName: T, tagDescription: st
   }
   return tagName;
 }
+
+export const DiscoveryTag = createTag("Discovery", "Basic endpoints used for node discovery");

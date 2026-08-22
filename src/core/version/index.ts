@@ -1,8 +1,6 @@
 import { apiRegistry } from "@/shared/openapi";
-import { createTag } from "@/shared/tags";
+import { DiscoveryTag } from "@/shared/tags";
 import z from "zod";
-
-export const VersionTag = createTag("Version", "Node's version information");
 
 export const VersionResponse = z.object({
   name: z.string().openapi({ description: "The node's name", example: "My Roger Node" }),
@@ -27,7 +25,7 @@ apiRegistry.registerPath({
   path: "/version",
   summary: "Get Node Information",
   description: "Get node information and identification",
-  tags: [VersionTag],
+  tags: [DiscoveryTag],
   responses: {
     200: {
       description: "Node information and identification",
