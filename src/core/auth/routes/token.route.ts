@@ -1,8 +1,7 @@
 import { apiRegistry } from "@/shared/openapi";
-import { AuthTag, OAuthError } from "../constants";
+import { AuthTag } from "../constants";
 import z from "zod";
 import { AuthorizationCode, RefreshToken } from "../schemas/ids.schema";
-import { composeError } from "@/shared/errors";
 
 export const TokenExchangeRequestBody = z.object({
   grant_type: z
@@ -61,12 +60,38 @@ apiRegistry.registerPath({
         },
       },
     },
-    400: composeError(
-      "Invalid request, expired authorization code, unsupported grant type or PKCE verifier mismatch.",
-      [OAuthError],
-    ),
-    500: composeError("Internal node error during JWT creation or database operations", [
-      OAuthError,
-    ]),
+    400: {
+      description:
+        "Invalid request, expired authorization code, unsupported grant type or PKCE verifier mismatch.",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z
+              .enum(["invalid_request", "invalid_grant", "unsupported_grant_type"])
+              .openapi({ description: "Standard OAuth 2.1 error code", example: "invalid_grant" }),
+            error_description: z.string().openapi({
+              description: "A human-readable error description",
+              example: "Invalid authorization token",
+            }),
+          }),
+        },
+      },
+    },
+    500: {
+      description: "Internal node error during JWT creation or database operations",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z
+              .enum(["server_error"])
+              .openapi({ description: "Standard OAuth 2.1 error code", example: "server_error" }),
+            error_description: z.string().openapi({
+              description: "A human-readable error description",
+              example: "Error while signing your JWT",
+            }),
+          }),
+        },
+      },
+    },
   },
 });
