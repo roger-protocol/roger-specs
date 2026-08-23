@@ -24,7 +24,7 @@ export const OAuthLoginUrlParams = z.object({
 apiRegistry.registerPath({
   method: "get",
   path: "/auth/oauth",
-  summary: "Login using OAuth PKCE",
+  summary: "Initiate OAuth Login",
   tags: [AuthTag],
   description:
     "Entry point for public clients to login their user. The node should immediately redirect the user to the requested provider OAuth page (302 temporary redirect to avoid browser caching)",
