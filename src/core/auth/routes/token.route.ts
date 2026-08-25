@@ -17,6 +17,10 @@ const AuthorizationCodeGrant = z
       description:
         "The redirect uri passed to the first PKCE request ([OAuth 2.1](https://oauth.net/2.1/))",
     }),
+    client_name: z.string().optional().openapi({
+      description: "A user-friendly client name bound to the user's session",
+      example: "Roger CLI (Windows 11)",
+    }),
   })
   .openapi({ title: "Authorization Code" });
 
