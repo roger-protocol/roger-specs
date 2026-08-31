@@ -1,5 +1,5 @@
-import { apiRegistry } from "@/shared/openapi";
-import { AuthTag } from "../constants";
+import { apiRegistry, createResponseObject } from "@/shared/openapi";
+import { AuthTag, OAuthError, RevocationError } from "../constants";
 import z from "zod";
 import { RefreshToken } from "../schemas/ids.schema";
 
@@ -47,38 +47,10 @@ apiRegistry.registerPath({
     200: {
       description: "The session was successfully revoked OR the token was invalid/expired",
     },
-    400: {
-      description: "Malformed request body or missing required token parameter.",
-      content: {
-        "application/json": {
-          schema: z.object({
-            error: z.enum(["invalid_request", "unsupported_token_type"]).openapi({
-              description: "Standard OAuth 2.1 error code",
-              example: "invalid_request",
-            }),
-            error_description: z.string().openapi({
-              description: "A human-readable error description",
-              example: "Missing required parameter: token",
-            }),
-          }),
-        },
-      },
-    },
-    500: {
-      description: "Internal node error during session revocation",
-      content: {
-        "application/json": {
-          schema: z.object({
-            error: z
-              .enum(["server_error"])
-              .openapi({ description: "Standard OAuth 2.1 error code", example: "server_error" }),
-            error_description: z.string().openapi({
-              description: "A human-readable error description",
-              example: "Error while processing revocation",
-            }),
-          }),
-        },
-      },
-    },
+    400: createResponseObject("Malformed request body or missing required token parameter.", [
+      OAuthError,
+      RevocationError,
+    ]),
+    500: createResponseObject("Internal node error during session revocation", [OAuthError]),
   },
 });

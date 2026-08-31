@@ -1,6 +1,6 @@
 import z from "zod";
 import { FeatureRegistry } from "@/shared/features";
-import { apiRegistry } from "@/shared/openapi";
+import { apiRegistry, createResponseObject } from "@/shared/openapi";
 import { DiscoveryTag } from "@/shared/tags";
 
 export const FeatureResponse = z.object({
@@ -15,13 +15,8 @@ apiRegistry.registerPath({
   tags: [DiscoveryTag],
   description: "Get the node's supported features and their configuration",
   responses: {
-    200: {
-      description: "Node's supported features and their configuration",
-      content: {
-        "application/json": {
-          schema: FeatureResponse,
-        },
-      },
-    },
+    200: createResponseObject("Node's supported features and their configuration", [
+      FeatureResponse,
+    ]),
   },
 });

@@ -1,4 +1,4 @@
-import { apiRegistry } from "@/shared/openapi";
+import { apiRegistry, createResponseObject } from "@/shared/openapi";
 import { DiscoveryTag } from "@/shared/tags";
 import z from "zod";
 
@@ -27,13 +27,6 @@ apiRegistry.registerPath({
   description: "Get node information and identification",
   tags: [DiscoveryTag],
   responses: {
-    200: {
-      description: "Node information and identification",
-      content: {
-        "application/json": {
-          schema: VersionResponse,
-        },
-      },
-    },
+    200: createResponseObject("Node information and identification", [VersionResponse]),
   },
 });

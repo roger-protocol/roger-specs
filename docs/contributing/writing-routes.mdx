@@ -92,7 +92,7 @@ apiRegistry.registerPath({
 ### Using Error Schemas
 ```ts title="src/core/auth/index.ts"
 import { apiRegistry } from "@/shared/openapi";
-import { composeError } from "@/shared/errors";
+import { createResponseObject } from "@/shared/openapi";
 
 apiRegistry.registerPath({
   method: "get",
@@ -101,7 +101,7 @@ apiRegistry.registerPath({
   tags: [AuthTag],
   responses: {
     ...
-    401: composeError("The given token is invalid", [AuthError]) // <- You can pass multiple error schemas
+    401: createResponseObject("The given token is invalid", [AuthError]) // <- You can pass multiple error schemas which will automatically be unioned
   }
 })
 ```
@@ -110,7 +110,7 @@ apiRegistry.registerPath({
 ```ts title="src/core/auth/index.ts"
 import { z } from "zod";
 import { apiRegistry } from "@/shared/openapi";
-import { createErrorSchema, composeError } from "@/shared/errors";
+import { createErrorSchema, createResponseObject } from "@/shared/openapi";
 import { createTag } from "@/shared/tags";
 
 export const AuthTag = createTag("Auth", "All auth related endpoints")
@@ -151,7 +151,7 @@ apiRegistry.registerPath({
         }
       }
     },
-    401: composeError("The given token is invalid", [AuthError]) // <- You can pass multiple error schemas
+    401: createResponseObject("The given token is invalid", [AuthError]) // <- You can pass multiple error schemas which will automatically be unioned
   }
 })
 ```

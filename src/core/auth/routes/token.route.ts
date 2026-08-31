@@ -1,5 +1,5 @@
-import { apiRegistry } from "@/shared/openapi";
-import { AuthTag } from "../constants";
+import { apiRegistry, createResponseObject } from "@/shared/openapi";
+import { AuthTag, OAuthError } from "../constants";
 import z from "zod";
 import { AuthorizationCode, RefreshToken } from "../schemas/ids.schema";
 
@@ -60,53 +60,21 @@ apiRegistry.registerPath({
     "Exchange the authorization code / refresh token issued by the node for a JWT + refresh token",
   request: {
     body: {
-      description: "PKCE Token Exchange Payload",
       content: {
         "application/json": { schema: TokenEndpointRequestBody },
       },
     },
   },
   responses: {
-    200: {
-      description: "Successfully authenticated, returns a JWT and Refresh Token",
-      content: {
-        "application/json": {
-          schema: TokenEndpointRequestResponse,
-        },
-      },
-    },
-    400: {
-      description:
-        "Invalid request, expired authorization code / refresh token, unsupported grant type or PKCE verifier mismatch.",
-      content: {
-        "application/json": {
-          schema: z.object({
-            error: z
-              .enum(["invalid_request", "invalid_grant", "unsupported_grant_type"])
-              .openapi({ description: "Standard OAuth 2.1 error code", example: "invalid_grant" }),
-            error_description: z.string().openapi({
-              description: "A human-readable error description",
-              example: "Invalid authorization token",
-            }),
-          }),
-        },
-      },
-    },
-    500: {
-      description: "Internal node error during JWT creation or database operations",
-      content: {
-        "application/json": {
-          schema: z.object({
-            error: z
-              .enum(["server_error"])
-              .openapi({ description: "Standard OAuth 2.1 error code", example: "server_error" }),
-            error_description: z.string().openapi({
-              description: "A human-readable error description",
-              example: "Error while signing your JWT",
-            }),
-          }),
-        },
-      },
-    },
+    200: createResponseObject("Successfully authenticated, returns a JWT and Refresh Token", [
+      TokenEndpointRequestResponse,
+    ]),
+    400: createResponseObject(
+      "Invalid request, expired authorization code / refresh token, unsupported grant type or PKCE verifier mismatch.",
+      [OAuthError],
+    ),
+    500: createResponseObject("Internal node error during JWT creation or database operations", [
+      OAuthError,
+    ]),
   },
 });
