@@ -4,9 +4,12 @@ import { SessionId } from "./ids.schema";
 export const UserSession = z
   .object({
     id: SessionId,
-    ip_address: z
-      .union([z.ipv4(), z.ipv6()])
-      .openapi({ description: "The last used IP for this session", example: "127.0.0.1" }),
+    ip_address: z.union([z.ipv4(), z.ipv6()]).openapi({
+      description: "The last used IP for this session",
+      example: "127.0.0.1",
+      type: "string",
+      format: "ip",
+    }),
     is_current: z
       .boolean()
       .openapi({ description: "Indicates if this session is the current requesting session" }),

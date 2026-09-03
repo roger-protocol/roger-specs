@@ -51,3 +51,17 @@ export function createErrorSchema<
     })
     .openapi(id) satisfies ErrorSchema; // Satisfies does not destroy the types infered by this function, only guarantees its structure
 }
+
+export const ValidationError = createErrorSchema("ValidationError", [
+  "invalid_body",
+  "invalid_params",
+  "invalid_query",
+]);
+
+export const NotFoundError = createErrorSchema("NotFoundError", ["resource_not_found"]);
+
+export const ServerError = createErrorSchema("ServerError", [
+  "internal_server_error",
+  "database_error",
+  "external_service_error",
+]);
