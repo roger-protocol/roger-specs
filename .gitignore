@@ -3,3 +3,5 @@ node_modules
 *.env
 dist
 docs/api/(generated)
+docs/contributing
+docs/(protocol)/guides
