@@ -6,8 +6,6 @@
   "pages": [
     "---Introduction---",
     "index",
-    "quick-start",
-    "---Guides---",
-    "...guides"
+    "quick-start"
   ]
 }
