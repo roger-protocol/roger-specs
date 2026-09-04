@@ -28,8 +28,10 @@ async function buildOpenAPI() {
   const versionedRoutes = apiRegistry.definitions.map((def) => {
     if (def.type === "route") {
       const cleanPath = def.route.path.startsWith("/") ? def.route.path : `/${def.route.path}`; // Ensure route is in the format /route (billing/card -> /billing/card)
-      if (ignoreVersioning.has(cleanPath)) return def;
-      return { ...def, route: { ...def.route, path: `/api/${majorVersion}${cleanPath}` } }; // Append /api/v# at the start of each route (/billing -> /api/v1/billing)
+      const apiPath = ignoreVersioning.has(cleanPath)
+        ? `/_roger${cleanPath}`
+        : `/_roger/${majorVersion + cleanPath}`;
+      return { ...def, route: { ...def.route, path: apiPath } }; // Append /api/v# at the start of each route (/billing -> /api/v1/billing)
     } else {
       return def;
     }

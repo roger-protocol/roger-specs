@@ -52,41 +52,16 @@ export function createErrorSchema<
     .openapi(id) satisfies ErrorSchema; // Satisfies does not destroy the types infered by this function, only guarantees its structure
 }
 
-/**
- * Utility helper to define error schemas in an OpenAPI route definition
- * @param description A summary of what could've gone wrong
- * @param schemas An array of error schemas that can be returned by the route
- * @returns An object formated for the OpenAPI registry response field
- * @example
- * ```ts
- * apiRegistry.registerPath({
- *   path: "/cart",
- *   method: "post",
- *   description: "Add an item to the cart",
- *   responses: {
- *     200: {
- *       description: "Item added successfully!",
- *       content: {
- *         "application/json": {
- *           schema: z.object({ success: z.boolean() }),
- *         },
- *       },
- *     },
- *     401: composeError("The user isn't logged in or the target item doesn't exist", [
- *       AuthError,
- *       CartError,
- *     ]),
- *   },
- * });
- * ```
- */
-export function composeError(description: string, schemas: [ErrorSchema, ...ErrorSchema[]]) {
-  return {
-    description,
-    content: {
-      "application/json": {
-        schema: schemas.length === 1 ? schemas[0] : z.union(schemas),
-      },
-    },
-  };
-}
+export const ValidationError = createErrorSchema("ValidationError", [
+  "invalid_body",
+  "invalid_params",
+  "invalid_query",
+]);
+
+export const NotFoundError = createErrorSchema("NotFoundError", ["resource_not_found"]);
+
+export const ServerError = createErrorSchema("ServerError", [
+  "internal_server_error",
+  "database_error",
+  "external_service_error",
+]);
