@@ -2,4 +2,4 @@
 import "@/core/version";
 import "@/core/features";
 import "@/core/auth";
-import "@/core/project";
+import "@/core/projects";
