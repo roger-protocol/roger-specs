@@ -12,8 +12,8 @@ const docsTarget = join(process.cwd(), "apps", "roger-docs", "public", "openapi.
 const ignoreVersioning = new Set(["/version"]);
 
 async function buildOpenAPI() {
-  const RELEASE_VERSION = packageJson.version;
-  const majorVersion = `v${RELEASE_VERSION.split(".")[0]}`;
+  const RELEASE_MAJOR_VERSION = parseInt(packageJson.version.split(".")[0]);
+  const majorVersion = `v${Math.max(1, RELEASE_MAJOR_VERSION).toString()}`;
 
   const start = Date.now();
   console.log("[OpenAPI]: Registering schemas...");
@@ -23,7 +23,7 @@ async function buildOpenAPI() {
   );
 
   console.log(
-    `[OpenAPI]: Versioning routes under /api/${majorVersion}... (version ${RELEASE_VERSION})`,
+    `[OpenAPI]: Versioning routes under /api/${majorVersion}... (version ${packageJson.version})`,
   );
   const versionedRoutes = apiRegistry.definitions.map((def) => {
     if (def.type === "route") {
@@ -43,7 +43,7 @@ async function buildOpenAPI() {
     openapi: "3.0.0",
     info: {
       title: "Roger Protocol Specification",
-      version: RELEASE_VERSION,
+      version: packageJson.version,
     },
   }) satisfies object;
 
