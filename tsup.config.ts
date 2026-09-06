@@ -5,7 +5,7 @@ export default defineConfig({
     version: "src/core/version/index.ts",
     features: "src/core/features/index.ts",
     auth: "src/core/auth/index.ts",
-    project: "src/core/project/index.ts",
+    projects: "src/core/projects/index.ts",
   },
   format: ["esm", "cjs"],
   dts: {
