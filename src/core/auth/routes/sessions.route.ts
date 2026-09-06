@@ -4,14 +4,13 @@ import { UserSession } from "../schemas/session.schema";
 import z from "zod";
 import { NotFoundError, ServerError, ValidationError } from "@/shared/errors";
 import { createTag } from "@/shared/tags";
+import { SessionId } from "../schemas/ids.schema";
 
 const SessionsTag = createTag("Sessions", "Session management routes");
 
 export const ListSessionsResponseBody = z.array(UserSession);
 export const RevokeSessionURLParams = z.object({
-  sessionId: z
-    .string()
-    .openapi({ description: "The ID of the session to revoke", example: "rgr_sess_abc123" }),
+  sessionId: SessionId.openapi({ description: "The ID of the session to revoke" }),
 });
 
 apiRegistry.registerPath({
