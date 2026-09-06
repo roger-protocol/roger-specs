@@ -8,3 +8,4 @@ import "./routes/sessions.route";
 import "./schemas/callback.schema";
 import "./schemas/ids.schema";
 import "./schemas/jwt.schema";
+import "./schemas/session.schema";
