@@ -1,4 +1,5 @@
 import { AuthConfig } from "@/core/auth/constants";
+import { ProjectsConfig } from "@/core/projects/constants";
 import z from "zod";
 
 /**
@@ -33,6 +34,6 @@ import z from "zod";
  * };
  */
 
-export const FeatureRegistry: Record<string, z.ZodType> = {
+export const FeatureRegistry = {
   "core:auth": AuthConfig,
-};
+} satisfies Record<string, z.ZodType>;
