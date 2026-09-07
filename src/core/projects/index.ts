@@ -1,6 +1,6 @@
 // Routes
-import "./routes/projects.route";
+export * from "./routes/projects.route";
 
 // Schemas
-import "./schemas/ids.schemas";
-import "./schemas/project.schema";
+export * from "./schemas/ids.schemas";
+export * from "./schemas/project.schema";

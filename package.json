@@ -51,27 +51,19 @@
     "dist"
   ],
   "exports": {
-    "./core/version": {
-      "types": "./dist/version.d.ts",
-      "import": "./dist/version.js",
-      "require": "./dist/version.cjs"
+    "./core/*": {
+      "import": {
+        "types": "./dist/*.d.ts",
+        "default": "./dist/*.js"
+      },
+      "require": {
+        "types": "./dist/*.d.cts",
+        "default": "./dist/*.cjs"
+      }
     },
-    "./core/features": {
-      "types": "./dist/features.d.ts",
-      "import": "./dist/features.js",
-      "require": "./dist/features.cjs"
-    },
-    "./core/auth": {
-      "types": "./dist/auth.d.ts",
-      "import": "./dist/auth.js",
-      "require": "./dist/auth.cjs"
-    },
-    "./core/projects": {
-      "types": "./dist/projects.d.ts",
-      "import": "./dist/projects.js",
-      "require": "./dist/projects.cjs"
-    },
-    "./openapi.json": "./dist/openapi.json"
+    "./openapi.json": {
+      "default": "./dist/openapi.json"
+    }
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^8.5.0",

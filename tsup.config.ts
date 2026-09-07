@@ -13,7 +13,11 @@ export default defineConfig({
       ignoreDeprecations: "6.0",
     },
   },
+  cjsInterop: true,
   clean: true,
-  splitting: true,
+  splitting: false,
   tsconfig: "tsconfig.src.json",
+  outExtension: ({ format }) => {
+    return { js: format === "cjs" ? ".cjs" : ".js" };
+  },
 });

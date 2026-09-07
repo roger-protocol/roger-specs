@@ -1,11 +1,11 @@
 // Routes
-import "./routes/oauth.route";
-import "./routes/token.route";
-import "./routes/revoke.route";
-import "./routes/sessions.route";
+export * from "./routes/oauth.route";
+export * from "./routes/token.route";
+export * from "./routes/revoke.route";
+export * from "./routes/sessions.route";
 
 // Schemas
-import "./schemas/callback.schema";
-import "./schemas/ids.schema";
-import "./schemas/jwt.schema";
-import "./schemas/session.schema";
+export * from "./schemas/callback.schema";
+export * from "./schemas/ids.schema";
+export * from "./schemas/jwt.schema";
+export * from "./schemas/session.schema";
