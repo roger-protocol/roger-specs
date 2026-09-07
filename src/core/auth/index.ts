@@ -9,3 +9,4 @@ export * from "./schemas/callback.schema";
 export * from "./schemas/ids.schema";
 export * from "./schemas/jwt.schema";
 export * from "./schemas/session.schema";
+export { AuthConfig } from "./constants";
