@@ -1,5 +1,4 @@
 import { AuthConfig } from "@/core/auth/constants";
-import { ProjectsConfig } from "@/core/projects/constants";
 import z from "zod";
 
 /**
