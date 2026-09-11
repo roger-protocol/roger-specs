@@ -3,6 +3,9 @@ import { ProjectId } from "./ids.schemas";
 
 export const Project = z.object({
   id: ProjectId,
+  kind: z
+    .enum(["game"])
+    .openapi({ description: "The type of ressource the project will manage", example: "game" }),
   name: z
     .string()
     .nonempty()

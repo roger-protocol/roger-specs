@@ -8,7 +8,7 @@ import { ProjectId } from "../schemas/ids.schemas";
 
 export const GetProjectsResponse = z.array(Project);
 
-export const CreateProjectBody = Project.pick({ name: true });
+export const CreateProjectBody = Project.pick({ name: true, kind: true });
 
 export const RenameProjectURLParams = z.object({ projectId: ProjectId });
 export const RenameProjectBody = Project.pick({ name: true });
