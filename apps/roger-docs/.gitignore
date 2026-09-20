@@ -11,6 +11,7 @@
 /build
 *.tsbuildinfo
 /public/openapi.json
+/public/manifest-schema.json
 
 # misc
 .DS_Store

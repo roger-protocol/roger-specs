@@ -41,7 +41,8 @@
   "scripts": {
     "lint": "eslint src scripts",
     "openapi:build": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/generate-openapi.ts",
-    "build": "tsup && npm run openapi:build",
+    "manifest-schema:build": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/generate-manifest-schema.ts",
+    "build": "tsup && npm run openapi:build && npm run manifest-schema:build",
     "docs": "npm run dev --workspace=apps/roger-docs",
     "docs:build": "npm run docs:gen-openapi-docs && npm run build --workspace=apps/roger-docs",
     "docs:start": "npm run start --workspace=roger-docs",
