@@ -7,7 +7,7 @@ export default defineConfig({
     auth: "src/core/auth/index.ts",
     projects: "src/core/projects/index.ts",
     environments: "src/core/environments/index.ts",
-    places: "src/core/places/index.ts",
+    targets: "src/core/targets/index.ts",
   },
   format: ["esm", "cjs"],
   dts: {
