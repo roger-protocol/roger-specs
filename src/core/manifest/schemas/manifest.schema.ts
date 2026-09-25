@@ -36,7 +36,11 @@ const UniverseEnvironmentSchema = z.object({
 const PlaceEnvironmentSchema = z.object({
   kind: z.literal("place").meta({ description: "The type of ressource the environment manages" }),
   branches: BranchesArray,
-  place: PlaceSchema,
+  place: z
+    .record(z.string(), PlaceSchema)
+    .refine((places) => Object.keys(places).length === 1, {
+      error: "An environment of kind 'place' must contain exactly one place",
+    }),
 });
 
 export const ManifestSchema = z.object({
