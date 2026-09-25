@@ -2,6 +2,7 @@ import { AuthConfig } from "@/core/auth";
 import { ProjectsConfig } from "@/core/projects";
 import z from "zod";
 import { EnvironmentsConfig } from "@/core/environments";
+import { TargetsConfig } from "@/core/targets/constants";
 
 /**
  * A registry containing all features configuration schemas used by the feature route to generate the final API response schema.
@@ -39,4 +40,5 @@ export const FeatureRegistry = {
   "core:auth": AuthConfig,
   "core:projects": ProjectsConfig,
   "core:environments": EnvironmentsConfig,
+  "core:targets": TargetsConfig,
 } satisfies Record<string, z.ZodType>;

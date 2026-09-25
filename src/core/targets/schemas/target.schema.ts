@@ -1,9 +1,10 @@
 import { EnvironmentId } from "@/core/environments";
 import z from "zod";
 
+export const TargetKind = z.enum(["place"]);
 export const PlaceTarget = z
   .object({
-    kind: z.enum(["place"]).openapi({ description: "The type of ressource the target points to" }),
+    kind: TargetKind.openapi({ description: "The type of ressource the target points to" }),
     name: z.string().openapi({
       description: "The name used in the config file to reference this place",
       example: "arena",
