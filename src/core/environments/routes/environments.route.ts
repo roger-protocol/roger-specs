@@ -14,6 +14,7 @@ export const CreateEnvironmentRequestBody = Environment.pick({
   name: true,
   universe_id: true,
   kind: true,
+  credential_id: true,
 });
 
 export const DeleteEnvironmentURLParams = z.object({

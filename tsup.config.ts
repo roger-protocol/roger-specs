@@ -8,6 +8,7 @@ export default defineConfig({
     projects: "src/core/projects/index.ts",
     environments: "src/core/environments/index.ts",
     targets: "src/core/targets/index.ts",
+    credentials: "src/core/credentials/index.ts",
   },
   format: ["esm", "cjs"],
   dts: {

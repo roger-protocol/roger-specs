@@ -1,5 +1,6 @@
 import z from "zod";
 import { EnvironmentId } from "./ids.schema";
+import { CredentialId } from "@/core/credentials";
 
 export const Environment = z.object({
   id: EnvironmentId,
@@ -16,6 +17,10 @@ export const Environment = z.object({
     .string()
     .lowercase()
     .openapi({ description: "The name of the environment (immutable)", example: "production" }),
+  credential_id: CredentialId.openapi({
+    description:
+      "The ID of the credential that will be used to communicate to Roblox for this environment",
+  }),
   created_at: z.iso
     .datetime()
     .openapi({ description: "The ISO timestamp at which the environment was created" }),
