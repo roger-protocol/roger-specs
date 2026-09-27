@@ -6,3 +6,4 @@ import "@/core/projects";
 import "@/core/environments";
 import "@/core/targets";
 import "@/core/credentials";
+import "@/core/storage";

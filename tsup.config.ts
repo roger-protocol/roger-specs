@@ -9,6 +9,7 @@ export default defineConfig({
     environments: "src/core/environments/index.ts",
     targets: "src/core/targets/index.ts",
     credentials: "src/core/credentials/index.ts",
+    storage: "src/core/storage/index.ts",
   },
   format: ["esm", "cjs"],
   dts: {
