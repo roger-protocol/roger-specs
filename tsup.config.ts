@@ -10,6 +10,7 @@ export default defineConfig({
     targets: "src/core/targets/index.ts",
     credentials: "src/core/credentials/index.ts",
     storage: "src/core/storage/index.ts",
+    deployments: "src/core/deployments/index.ts",
   },
   format: ["esm", "cjs"],
   dts: {
