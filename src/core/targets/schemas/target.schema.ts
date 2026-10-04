@@ -1,3 +1,4 @@
+import { DeploymentId } from "@/core/deployments";
 import { EnvironmentId } from "@/core/environments";
 import z from "zod";
 
@@ -11,9 +12,8 @@ export const PlaceTarget = z
     }),
     environment_id: EnvironmentId,
     place_id: z.string().openapi({ description: "The linked Roblox place's ID" }),
-    // TODO: change z.string() for DeploymentId once the deployments domain is created
     used_in: z
-      .array(z.string())
+      .array(DeploymentId)
       .openapi({ description: "The ID of every deployment that currently uses this target" }),
     created_at: z.iso
       .datetime()
