@@ -9,11 +9,15 @@ const BranchesArray = z.array(z.string()).optional().meta({
     "Branch patterns that need to be matched with the current active git branch in order to push a deployment",
 });
 
-const UniverseEnvironmentSchema = z.object({
+const EnvironmentBaseSchema = z.object({
+  versioning: z.enum(["semver", "incremental", "custom"]),
+  branches: BranchesArray,
+});
+
+const UniverseEnvironmentSchema = EnvironmentBaseSchema.extend({
   kind: z
     .literal("universe")
     .meta({ description: "The type of ressource the environment manages" }),
-  branches: BranchesArray,
   socialLinks: z
     .array(SocialLink)
     .optional()
@@ -33,14 +37,12 @@ const UniverseEnvironmentSchema = z.object({
     }),
 });
 
-const PlaceEnvironmentSchema = z.object({
+const PlaceEnvironmentSchema = EnvironmentBaseSchema.extend({
   kind: z.literal("place").meta({ description: "The type of ressource the environment manages" }),
   branches: BranchesArray,
-  place: z
-    .record(z.string(), PlaceSchema)
-    .refine((places) => Object.keys(places).length === 1, {
-      error: "An environment of kind 'place' must contain exactly one place",
-    }),
+  place: z.record(z.string(), PlaceSchema).refine((places) => Object.keys(places).length === 1, {
+    error: "An environment of kind 'place' must contain exactly one place",
+  }),
 });
 
 export const ManifestSchema = z.object({
