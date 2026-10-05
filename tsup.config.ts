@@ -1,9 +1,16 @@
 import { defineConfig } from "tsup";
-import { tsconfigPathsPlugin } from "esbuild-plugin-tsconfig-paths";
 
 export default defineConfig({
   entry: {
-    core: "src/core/index.ts",
+    version: "src/core/version/index.ts",
+    features: "src/core/features/index.ts",
+    auth: "src/core/auth/index.ts",
+    projects: "src/core/projects/index.ts",
+    environments: "src/core/environments/index.ts",
+    targets: "src/core/targets/index.ts",
+    credentials: "src/core/credentials/index.ts",
+    storage: "src/core/storage/index.ts",
+    deployments: "src/core/deployments/index.ts",
   },
   format: ["esm", "cjs"],
   dts: {
@@ -11,7 +18,11 @@ export default defineConfig({
       ignoreDeprecations: "6.0",
     },
   },
+  cjsInterop: true,
   clean: true,
-  splitting: true,
-  esbuildPlugins: [tsconfigPathsPlugin()],
+  splitting: false,
+  tsconfig: "tsconfig.src.json",
+  outExtension: ({ format }) => {
+    return { js: format === "cjs" ? ".cjs" : ".js" };
+  },
 });

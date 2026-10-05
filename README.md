@@ -34,5 +34,9 @@ import { coolFeatureBodySchema } from "@roger-protocol/specs/feature"
 If you are implementing the Roger Protocol in another programming language than JavaScript/TypeScript, you can use the compiled `openapi.json` to generate type-safe clients with tools like [openapi-generator](https://github.com/OpenAPITools/openapi-generator).
 
 The `openapi.json` file can be found in multiple locations:
-* **Locally via npm:** Located under `../node_modules/@roger-protocol/specs/dist/openapi.json` after install
+* **In the npm package:**
+```typescript
+import openapiJson from '@roger-protocol/specs/openapi.json';
+```
+* **In the node_modules folder:** Located under `../node_modules/@roger-protocol/specs/dist/openapi.json` after install
 * **Directly in GitHub:** Attached as a static asset under the GitHub Release of your choice
