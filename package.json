@@ -70,5 +70,9 @@
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^8.5.0",
     "zod": "^4.4.3"
+  },
+  "overrides": {
+    "undici": "7.29.1",
+    "basic-ftp": "6.2.1"
   }
 }
