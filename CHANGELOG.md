@@ -1,7 +1,5 @@
 # Changelog
 
-## [0.1.0](https://github.com/roger-protocol/roger-specs/compare/v0.1.0-beta.0...v0.1.0) (2026-10-05)
-
 ## 0.1.0-beta.0 (2026-10-04)
 
 ### Features
