@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.0](https://github.com/roger-protocol/roger-specs/compare/v0.1.0-beta.0...v0.1.0) (2026-10-05)
+
+### Reverts
+
+* Revert "V0.1 Release" (#20) ([68cf167](https://github.com/roger-protocol/roger-specs/commit/68cf1679f56cab797768b2b0c68266590804888c)), closes [#20](https://github.com/roger-protocol/roger-specs/issues/20)
+
 ## 0.1.0-beta.0 (2026-10-04)
 
 ### Features
