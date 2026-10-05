@@ -1,5 +1,6 @@
 # Changelog
 
+<<<<<<< HEAD
 ## 0.2.0 (2026-10-05)
 
 ### Features
@@ -23,6 +24,8 @@
 
 ## [0.1.0](https://github.com/roger-protocol/roger-specs/compare/v0.1.0-beta.0...v0.1.0) (2026-10-05)
 
+=======
+>>>>>>> v0.1
 ## 0.1.0-beta.0 (2026-10-04)
 
 ### Features
