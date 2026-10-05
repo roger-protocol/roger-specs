@@ -20,6 +20,7 @@ on:
       skip_git:
         type: boolean
         description: Skip git (no commits, no tags creation)
+        default: false
       skip_github:
         type: boolean
         description: Skip GitHub Release
@@ -27,6 +28,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   release:
@@ -43,6 +45,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
+          registry-url: https://registry.npmjs.org/
 
       - name: Install Dependencies
         run: npm ci
@@ -52,15 +55,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Login into NPM
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-
-      - name: Build Package
-        run: npm run build
-
       - name: Release Package to the Latest Channel
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           IS_DRY_RUN: ${{ inputs.dry_run || false }}
           SKIP_GIT: ${{ inputs.skip_git || false }}
@@ -75,3 +72,35 @@ jobs:
           if [ "$SKIP_NPM" = "true" ]; then FLAGS="$FLAGS --no-npm"; fi
 
           npx release-it --ci $FLAGS
+
+      - name: Deploy Versioned Docs
+        if: inputs.dry_run != true
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+            # Build the docs
+            npx cross-env CLOUDFLARE_ACCOUNT_ID= CLOUDFLARE_API_TOKEN= npm run docs:build
+
+            # Create the Cloudflare Project for the specific major version
+            MAJOR_VERSION=$(node -p "const v = require('./package.json').version.split('.')[0]; v === '0' ? '1' : v")
+            PROJECT_NAME="roger-docs-v${MAJOR_VERSION}"
+            DOMAIN="v${MAJOR_VERSION}.rogerprotocol.org"
+
+            echo "Major Version: ${MAJOR_VERSION}"
+            echo "Project Name: ${PROJECT_NAME}"
+            echo "Domain: ${DOMAIN}"
+
+            npx wrangler pages project create $PROJECT_NAME --production-branch=main || true
+
+            # Bind custom subdomain to the newly created project
+            curl -s -X POST "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${PROJECT_NAME}/domains" \
+              -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{\"name\": \"${DOMAIN}\"}"
+
+            # Deploy to the specific major version project
+            npx wrangler pages deploy apps/roger-docs/out --project-name=$PROJECT_NAME
+
+            # Deploy to the main project
+            npx wrangler pages deploy apps/roger-docs/out --project-name=roger-docs
