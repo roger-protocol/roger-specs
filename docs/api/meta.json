@@ -1,7 +1,0 @@
-{
-  "title": "API Reference",
-  "icon": "Satellite",
-  "description": "Auto-generated OpenAPI specifications",
-  "root": true,
-  "pages": ["index", "...(generated)"]
-}
