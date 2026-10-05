@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.2.0 (2026-10-05)
+
+### Features
+
+* add path aliases support ([7afb3fd](https://github.com/roger-protocol/roger-specs/commit/7afb3fd259b6b3066ab3c7e91615e0b2ad5822c4))
+* added ESLint ([f39e61b](https://github.com/roger-protocol/roger-specs/commit/f39e61bfb1e581153e6cb9ce2275b11372e78414))
+* created issues/pr templates ([1d7a3e9](https://github.com/roger-protocol/roger-specs/commit/1d7a3e9e219975b3ab333f5586c0f047a93228a1))
+* initial commit ([1f147c1](https://github.com/roger-protocol/roger-specs/commit/1f147c1fd6e92b5a7c79f75e82f6d0d579a3b69f))
+* removed the release cycle section from README ([158993a](https://github.com/roger-protocol/roger-specs/commit/158993a8a4c32b4b706cf6b4fd2ec0b6f6fc4688))
+
+### Bug Fixes
+
+* **ci:** Login to NPM before running release-it ([9cbb7bb](https://github.com/roger-protocol/roger-specs/commit/9cbb7bb538cb83f00b179c8c2f2bbb7f0e36fd0f))
+* ignore dist and node_modules in eslint ([ec456e3](https://github.com/roger-protocol/roger-specs/commit/ec456e3d8596b777baf8ffe73d264160cd577d89))
+* migrate from NodeNext to ESNext/Bundler to allow extensionless ([f1ab025](https://github.com/roger-protocol/roger-specs/commit/f1ab025ec80f20dfc9af09022853549bdb97185f))
+* **release:** create the build command ([e7a472d](https://github.com/roger-protocol/roger-specs/commit/e7a472d4e21b2ecd67b42ad702fd01bcf6e5740b))
+
+### Reverts
+
+* Revert "V0.1 Release" (#20) ([68cf167](https://github.com/roger-protocol/roger-specs/commit/68cf1679f56cab797768b2b0c68266590804888c)), closes [#20](https://github.com/roger-protocol/roger-specs/issues/20)
+
 ## [0.1.0](https://github.com/roger-protocol/roger-specs/compare/v0.1.0-beta.0...v0.1.0) (2026-10-05)
 
 ## 0.1.0-beta.0 (2026-10-04)
