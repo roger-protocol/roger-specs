@@ -6,11 +6,7 @@
   "description": "Roger API specifications and standards",
   "license": "Apache-2.0",
   "author": "Valentin Artarit (https://github.com/OverDsh)",
-<<<<<<< HEAD
-  "version": "0.2.0",
-=======
   "version": "0.1.0-beta.0",
->>>>>>> v0.1
   "type": "module",
   "publishConfig": {
     "access": "public"
