@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1-beta.0](https://github.com/roger-protocol/roger-specs/compare/v0.1.0...v0.2.1-beta.0) (2026-10-12)
+
+### Features
+
+* add an operationId to each route for better code generation ([3966aea](https://github.com/roger-protocol/roger-specs/commit/3966aeab5c68ad037174b1df7897566513e02bd0))
+* fix typos in the project config schema ([397b9c7](https://github.com/roger-protocol/roger-specs/commit/397b9c76541ea147d11945f31fb3703782570473))
+* unify the features schema ([84deb89](https://github.com/roger-protocol/roger-specs/commit/84deb893350212fcac156acad1692876bb4f630d))
+
 ## [0.1.0](https://github.com/roger-protocol/roger-specs/compare/v0.1.0-beta.0...v0.1.0) (2026-10-06)
 
 ### Reverts
