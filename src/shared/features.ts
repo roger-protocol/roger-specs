@@ -19,11 +19,11 @@ import { DeploymentsConfig } from "@/core/deployments";
  * @example
  * export const FeatureRegistry: Record<string, z.ZodType> = {
  *   "core:auth": z.object({
- *     maxUsernameLenght: z
+ *     Length: z
  *       .int()
  *       .positive()
  *       .default(32)
- *       .openapi({ description: "The maximum lenght of a username", example: 32 }),
+ *       .openapi({ description: "The maximum length of a username", example: 32 }),
  *   }),
  *   scheduling: z
  *     .object({

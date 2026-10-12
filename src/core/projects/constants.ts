@@ -11,10 +11,10 @@ export const ProjectsConfig = z.object({
   maxUserProjects: z
     .number()
     .openapi({ description: "The maximum number of projects a user can own", example: 10 }),
-  minProjectNameLenght: z
+  minProjectNameLength: z
     .number()
     .openapi({ description: "The minimum length of a project name", example: 3 }),
-  maxProjectNameLenght: z
+  maxProjectNameLength: z
     .number()
     .openapi({ description: "The maximum length of a project name", example: 64 }),
   supportedProjectTypes: z
