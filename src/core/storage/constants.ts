@@ -10,19 +10,19 @@ export const StorageError = createErrorSchema("StorageError", [
 ]);
 
 export const StorageConfig = z.object({
-  maxStorageNameLength: z.int().openapi({
-    description: "The maximum number of characters a storage object name can have",
-    example: 64,
+  maxStorageObjectsPerAccount: z.int().openapi({
+    description: "The maximum amount of storage objects an account can hold",
+    example: 3,
   }),
   minStorageNameLength: z.int().openapi({
     description: "The minimum number of characters a storage object name must have",
     example: 3,
   }),
-  maxStorageObjectsPerOwner: z.int().openapi({
-    description: "The maximum amount of storage objects an owner can have",
-    example: 3,
+  maxStorageNameLength: z.int().openapi({
+    description: "The maximum number of characters a storage object name can have",
+    example: 64,
   }),
-  supportedStorageKind: z
+  supportedStorageKinds: z
     .enum(["S3", "internal"])
     .openapi({ description: "Supported storage types", example: ["S3", "internal"] }),
 });
