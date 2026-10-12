@@ -31,6 +31,7 @@ export const RevokeEndpointRequestBody = z.union([AccessTokenBody, RefreshTokenB
 apiRegistry.registerPath({
   method: "post",
   path: "/auth/revoke",
+  operationId: "revokeToken",
   summary: "Revoke a Token",
   tags: [AuthTag],
   description: "Revoke a session using a refresh token / access token",

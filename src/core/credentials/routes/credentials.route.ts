@@ -53,6 +53,7 @@ export const DeleteCredentialURLParams = z.object({
 apiRegistry.registerPath({
   method: "get",
   path: "/projects/{projectId}/credentials",
+  operationId: "listCredentials",
   summary: "List every Credentials",
   description: "List every credentials linked to one project",
   tags: [CredentialsTag],
@@ -73,7 +74,8 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "post",
   path: "/projects/{projectId}/credentials",
-  summary: "Register a Credential",
+  operationId: "createCredential",
+  summary: "Create a Credential",
   description: "Link a new Roblox credential to a project",
   tags: [CredentialsTag],
   request: {
@@ -96,6 +98,7 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "put",
   path: "/projects/{projectId}/credentials/{credentialId}",
+  operationId: "renameCredential",
   summary: "Rename a Credential",
   description: "Rename an existing credential",
   tags: [CredentialsTag],
@@ -119,6 +122,7 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "post",
   path: "/projects/{projectId}/credentials/{credentialId}/rotate",
+  operationId: "rotateCredential",
   summary: "Rotate a Credential",
   description: "Rotate an existing credential",
   tags: [CredentialsTag],
@@ -145,6 +149,7 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "delete",
   path: "/projects/{projectId}/credentials/{credentialId}",
+  operationId: "deleteCredential",
   summary: "Delete a Credential",
   description:
     "Delete a credential from a project. Note: The credential must not be linked to any active environments before deleting",

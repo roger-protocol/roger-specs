@@ -11,6 +11,7 @@ export type FeatureResponseType = z.infer<typeof FeatureResponse>;
 apiRegistry.registerPath({
   method: "get",
   path: "/features",
+  operationId: "getFeatures",
   summary: "Get Node Features",
   tags: [DiscoveryTag],
   description: "Get the node's supported features and their configuration",

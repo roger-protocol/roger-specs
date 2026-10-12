@@ -28,6 +28,7 @@ const ErrorObject = z.object({
 apiRegistry.registerPath({
   method: "get",
   path: "/auth/oauth",
+  operationId: "initiateOAuthLogin",
   summary: "Initiate OAuth Login",
   tags: [AuthTag],
   description:

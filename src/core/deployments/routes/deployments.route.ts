@@ -16,6 +16,7 @@ export const GetDeploymentsResponseBody = z.array(Deployment);
 apiRegistry.registerPath({
   method: "get",
   path: "/projects/{projectId}/deployments",
+  operationId: "listDeployments",
   summary: "List Deployments",
   description: "Return an array of every deployments in a project",
   tags: [DeploymentsTag],
@@ -72,6 +73,7 @@ export const CreateDeploymentRequestBody = z.object({
 apiRegistry.registerPath({
   method: "post",
   path: "/projects/{projectId}/deployments",
+  operationId: "createDeployment",
   summary: "Create a Deployment",
   description: "Create a new deployment",
   tags: [DeploymentsTag],
@@ -101,7 +103,8 @@ export const DeployDeploymentURLParams = z.object({
 apiRegistry.registerPath({
   method: "post",
   path: "/projects/{projectId}/deployments/{deploymentId}/deploy",
-  summary: "Deploy a Staged Deployment",
+  operationId: "triggerDeployment",
+  summary: "Trigger a Staged Deployment",
   description: "Deploy a staged/inactive deployment",
   tags: [DeploymentsTag],
   request: { params: DeployDeploymentURLParams },
@@ -131,6 +134,7 @@ export const DeleteDeploymentURLParams = z.object({
 apiRegistry.registerPath({
   method: "delete",
   path: "/projects/{projectId}/deployments/{deploymentId}",
+  operationId: "deleteDeployment",
   summary: "Delete a Deployment",
   description:
     "Delete an existing deployment. Note: The deployment must not be active before deletion",

@@ -54,6 +54,7 @@ export const TokenEndpointRequestResponse = z.object({
 apiRegistry.registerPath({
   method: "post",
   path: "/auth/token",
+  operationId: "exchangeToken",
   summary: "Obtain or Refresh Access Token",
   tags: [AuthTag],
   description:

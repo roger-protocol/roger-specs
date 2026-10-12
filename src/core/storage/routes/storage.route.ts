@@ -12,7 +12,8 @@ export const GetStorageObjectsResponseBody = z.array(StorageObject);
 apiRegistry.registerPath({
   method: "get",
   path: "/storage",
-  summary: "Fetch Storage Objects",
+  operationId: "listStorageObjects",
+  summary: "List Storage Objects",
   description: "Return a list of every storage objects linked to a user's account",
   tags: [StorageTag],
   security: [{ [BearerAuth]: [] }],
@@ -45,8 +46,9 @@ export const LinkStorageObjectRequestBody = z.discriminatedUnion("kind", [
 apiRegistry.registerPath({
   method: "post",
   path: "/storage",
-  summary: "Link a Storage Object",
-  description: "Link a new storage object to your account",
+  operationId: "createStorageObject",
+  summary: "Create a Storage Object",
+  description: "Create a new storage object under your account",
   tags: [StorageTag],
   request: { body: { content: { "application/json": { schema: LinkStorageObjectRequestBody } } } },
   security: [{ [BearerAuth]: [] }],
@@ -73,6 +75,7 @@ export const RenameStorageObjectRequestURLParams = z.object({
 apiRegistry.registerPath({
   method: "put",
   path: "/storage/{storageId}",
+  operationId: "renameStorageObject",
   summary: "Rename a Storage Object",
   description: "Change the name of a storage object",
   tags: [StorageTag],
@@ -104,6 +107,7 @@ export const RotateStorageObjectRequestURLParams = z.object({
 apiRegistry.registerPath({
   method: "post",
   path: "/storage/{storageId}/rotate",
+  operationId: "rotateStorageObject",
   summary: "Rotate a Storage Object",
   description: "Rotate the credentials of a storage object",
   tags: [StorageTag],
@@ -135,6 +139,7 @@ export const DeleteStorageObjectURLParams = z.object({
 apiRegistry.registerPath({
   method: "delete",
   path: "/storage/{storageId}",
+  operationId: "deleteStorageObject",
   summary: "Delete a Storage Object",
   description:
     "Delete a storage object from your account. Note: It must not be used by any project before deletion",

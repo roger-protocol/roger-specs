@@ -23,6 +23,7 @@ export type VersionResponseType = z.infer<typeof VersionResponse>;
 apiRegistry.registerPath({
   method: "get",
   path: "/version",
+  operationId: "getVersion",
   summary: "Get Node Information",
   description: "Get node information and identification",
   tags: [DiscoveryTag],
