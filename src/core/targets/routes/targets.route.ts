@@ -34,7 +34,8 @@ export const DeleteTargetURLParams = z.object({
 apiRegistry.registerPath({
   method: "get",
   path: "/projects/{projectId}/environments/{environmentId}/targets",
-  summary: "Fetch Targets",
+  operationId: "listTargets",
+  summary: "List Targets",
   description: "Get a list of all targets linked to one environment",
   tags: [TargetsTag],
   request: {
@@ -56,6 +57,7 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "post",
   path: "/projects/{projectId}/environments/{environmentId}/targets",
+  operationId: "createTarget",
   summary: "Create Target",
   description: "Create a new target under the specified environment",
   tags: [TargetsTag],
@@ -79,6 +81,7 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "put",
   path: "/projects/{projectId}/environments/{environmentId}/targets/{name}",
+  operationId: "changeTargetRessourceId",
   summary: "Edit Target Ressource ID",
   description: "Change the id of the ressource the target is pointing to",
   tags: [TargetsTag],
@@ -104,6 +107,7 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "delete",
   path: "/projects/{projectId}/environments/{environmentId}/targets/{name}",
+  operationId: "deleteTarget",
   summary: "Delete Target",
   description:
     "Delete a target from an environment (must delete every deployments associated with the target first)",

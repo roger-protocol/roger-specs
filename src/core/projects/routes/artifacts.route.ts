@@ -23,6 +23,7 @@ export const CheckArtifactResponseBody = z.object({
 apiRegistry.registerPath({
   method: "post",
   path: "/projects/{projectId}/artifacts/check",
+  operationId: "checkArtifacts",
   summary: "Check Artifact is Already Stored",
   description:
     "Pass an array of file hashes to check and the node should return whether or not the file is stored or not",

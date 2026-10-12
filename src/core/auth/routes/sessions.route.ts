@@ -16,6 +16,7 @@ export const RevokeSessionURLParams = z.object({
 apiRegistry.registerPath({
   method: "get",
   path: "/auth/sessions",
+  operationId: "listSessions",
   summary: "List Active Sessions",
   description: "Get informations about every sessions associated to the authenticated user",
   tags: [SessionsTag],
@@ -32,6 +33,7 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "delete",
   path: "/auth/sessions/{sessionId}",
+  operationId: "revokeSession",
   summary: "Revoke a Session",
   description: "Revoke a session based on it's ID (need to be authenticated)",
   tags: [SessionsTag],
@@ -56,6 +58,7 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "delete",
   path: "/auth/sessions",
+  operationId: "revokeOtherSessions",
   summary: "Revoke Every Other Sessions",
   description:
     "Revoke every active session associated with the authenticated user, excluding the session that made the request",

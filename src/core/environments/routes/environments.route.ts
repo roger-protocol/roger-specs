@@ -25,8 +25,9 @@ export const DeleteEnvironmentURLParams = z.object({
 apiRegistry.registerPath({
   method: "get",
   path: "/projects/{projectId}/environments",
-  summary: "Get All Environments",
-  description: "Fetch every environments in a given project",
+  operationId: "listEnvironments",
+  summary: "List Environments",
+  description: "List every environments in a given project",
   tags: [EnvironmentsTag],
   security: [{ [BearerAuth]: [] }],
   request: { params: GetEnvironmentsURLParams },
@@ -44,6 +45,7 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "post",
   path: "/projects/{projectId}/environments",
+  operationId: "createEnvironment",
   summary: "Create a new Environment",
   description:
     "Create a new environment under the specified project. You must pass a universe id to link the environment to an exisiting universe for now since Roblox doesn't allow universe creation using API keys yet. Note: The environment name is immutable and must be in lowercase.",
@@ -68,6 +70,7 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "delete",
   path: "/projects/{projectId}/environments/{environmentId}",
+  operationId: "deleteEnvironment",
   summary: "Delete an Environment",
   description:
     "Delete an environment with it's environment id. Every deployment including this environment will not be able to promote to it even if re-created.",

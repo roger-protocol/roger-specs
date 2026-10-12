@@ -18,12 +18,13 @@ export const DeleteProjectURLParams = z.object({ projectId: ProjectId });
 apiRegistry.registerPath({
   method: "get",
   path: "/projects",
-  summary: "Get All Projects",
-  description: "Returns an array containing all of the project of a user",
+  operationId: "listProjects",
+  summary: "List Projects",
+  description: "Returns an array containing all of the project of an account",
   tags: [ProjectTag],
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully returned all of the user's projects", [
+    200: createResponseObject("Successfully returned all of the account's projects", [
       GetProjectsResponse,
     ]),
     401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
@@ -36,6 +37,7 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "post",
   path: "/projects",
+  operationId: "createProject",
   summary: "Create A Project",
   description: "Create a new project under the user's account with the provided name",
   tags: [ProjectTag],
@@ -57,6 +59,7 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "put",
   path: "/projects/{projectId}",
+  operationId: "renameProject",
   summary: "Rename a Project",
   description: "Update the name of a project",
   tags: [ProjectTag],
@@ -82,6 +85,7 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "delete",
   path: "/projects/{projectId}",
+  operationId: "deleteProject",
   summary: "Delete a Project",
   description: "Delete a project permanently",
   tags: [ProjectTag],
