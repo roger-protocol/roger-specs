@@ -23,6 +23,6 @@ export const StorageConfig = z.object({
     example: 64,
   }),
   supportedStorageKinds: z
-    .enum(["S3", "internal"])
+    .array(z.enum(["S3", "internal"]))
     .openapi({ description: "Supported storage types", example: ["S3", "internal"] }),
 });
