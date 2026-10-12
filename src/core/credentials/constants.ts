@@ -13,17 +13,17 @@ export const CredentialsError = createErrorSchema("CredentialsError", [
 ]);
 
 export const CredentialsConfig = z.object({
-  maxCredentialNameLength: z.int().openapi({
-    description: "The maximum number of characters a credential name can have",
-    example: 64,
-  }),
+  maxCredentialsPerProject: z
+    .int()
+    .openapi({ description: "The maximum amount of credentials a project can hold", example: 5 }),
   minCredentialNameLength: z.int().openapi({
     description: "The minimum number of characters a credential name must have",
     example: 3,
   }),
-  maxCredentialsPerProject: z
-    .int()
-    .openapi({ description: "The maximum amount of credentials a project can hold", example: 5 }),
+  maxCredentialNameLength: z.int().openapi({
+    description: "The maximum number of characters a credential name can have",
+    example: 64,
+  }),
   supportedCredentialKinds: z
     .array(z.enum(["api-key"]))
     .openapi({ description: "An array of supported credential kinds", example: ["api-key"] }),

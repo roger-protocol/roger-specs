@@ -14,18 +14,14 @@ export const DeploymentsConfig = z.object({
     description: "The maximum number of deployments a single project can hold",
     example: 50,
   }),
-  maxVersionLength: z
-    .int()
-    .min(-1)
-    .openapi({ description: "The maximum length of a deployment version string", example: 64 }),
   minVersionLength: z
     .int()
     .min(1)
     .openapi({ description: "The minimum length of a deployment version string", example: 1 }),
-  maxPlacesPerDeployment: z.int().min(-1).openapi({
-    description: "The maximum amount of places a single deployment can manage",
-    example: 10,
-  }),
+  maxVersionLength: z
+    .int()
+    .min(-1)
+    .openapi({ description: "The maximum length of a deployment version string", example: 64 }),
   maxPlaceFileSizeBytes: z.int().min(-1).openapi({
     description: "The maximum place file (.rbxl) size in bytes (base-2)",
     example: 5_368_709_120,

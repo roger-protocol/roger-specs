@@ -7,7 +7,7 @@ export const EnvironmentsTag = createTag(
 );
 
 export const EnvironmentsConfig = z.object({
-  maxProjectEnvironments: z.int().openapi({
+  maxEnvironmentsPerProject: z.int().openapi({
     description: "The maximum amount of environments a single project can hold",
     example: 5,
   }),
