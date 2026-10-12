@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.2](https://github.com/roger-protocol/roger-specs/compare/v0.2.1...v0.2.2) (2026-10-12)
+
+### Bug Fixes
+
+* supportedStorageKinds in the storage config schema was defined as ([71918de](https://github.com/roger-protocol/roger-specs/commit/71918de5043510efd073bc91c4909b28a63d4325))
+
 ## [0.2.1](https://github.com/roger-protocol/roger-specs/compare/v0.1.0...v0.2.1) (2026-10-12)
 
 ### Features
