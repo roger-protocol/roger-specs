@@ -45,6 +45,14 @@ async function buildOpenAPI() {
       title: "Roger Protocol Specification",
       version: packageJson.version,
     },
+    servers: [
+      { url: "https://rogerprotocol.org/" },
+      {
+        url: "{custom_url}",
+        description: "Custom server URL",
+        variables: { custom_url: { default: "http://localhost:8080" } },
+      },
+    ],
   }) satisfies object;
 
   OpenAPIDocument.tags = Array.from(tagRegistry, ([name, description]) => ({ name, description }));
