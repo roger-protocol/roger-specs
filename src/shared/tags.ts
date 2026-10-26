@@ -17,7 +17,7 @@ export const tagRegistry = new Map<string, string>();
  * ```
  */
 export function createTag<const T extends string>(tagName: T, tagDescription: string): T {
-  if (!(tagName in tagRegistry)) {
+  if (!tagRegistry.has(tagName)) {
     tagRegistry.set(tagName, tagDescription);
   } else {
     console.warn(`[TagRegistry]: Tag ${tagName} is already registered. Registration skipped`);
