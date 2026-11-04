@@ -13,7 +13,7 @@ export const OAuthLoginUrlParams = z.object({
   redirect_uri: z.url().openapi({
     description:
       "The client callback URL the user will be redirected to with a server-issued authorization code",
-    example: "localhost:8080/oauth/callback/{provider}",
+    example: "http://localhost:3000/oauth/callback/{provider}",
   }),
   state: z.string().openapi({
     description:
