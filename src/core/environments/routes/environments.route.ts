@@ -1,9 +1,9 @@
 import { ProjectId } from "@/core/projects";
 import { apiRegistry, createResponseObject } from "@/shared/openapi";
 import { EnvironmentsTag } from "../constants";
-import { AuthError, BearerAuth, ForbiddenError } from "@/core/auth/constants";
+import { BearerAuth, ForbiddenError, UnauthorizedError } from "@/core/auth/constants";
 import { Environment } from "../schemas/environment.schema";
-import { NotFoundError, ServerError, ValidationError } from "@/shared/errors";
+import { InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors";
 import z from "zod";
 import { EnvironmentId } from "../schemas/ids.schema";
 
@@ -32,13 +32,11 @@ apiRegistry.registerPath({
   security: [{ [BearerAuth]: [] }],
   request: { params: GetEnvironmentsURLParams },
   responses: {
-    200: createResponseObject("Successfully returned all of the environments", [Environment]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target project doesn't exist", [NotFoundError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfully returned all of the environments", Environment),
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });
 
@@ -56,14 +54,12 @@ apiRegistry.registerPath({
     body: { content: { "application/json": { schema: CreateEnvironmentRequestBody } } },
   },
   responses: {
-    200: createResponseObject("Successfully created the environment", [Environment]),
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target project/universe doesn't exist", [NotFoundError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfully created the environment", Environment),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });
 
@@ -78,13 +74,11 @@ apiRegistry.registerPath({
   security: [{ [BearerAuth]: [] }],
   request: { params: DeleteEnvironmentURLParams },
   responses: {
-    200: createResponseObject("Successfully deleted the environment", [Environment]),
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target project/environment doesn't exist", [NotFoundError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfully deleted the environment", Environment),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });

@@ -1,13 +1,7 @@
-import { createErrorSchema } from "@/shared/errors";
 import { createTag } from "@/shared/tags";
 import z from "zod";
 
 export const DeploymentsTag = createTag("Deployments", "All routes related to deployments");
-
-export const DeploymentError = createErrorSchema("DeploymentError", [
-  "deployment_not_staged",
-  "deployment_active",
-]);
 
 export const DeploymentsConfig = z.object({
   maxDeploymentsPerProject: z.int().min(-1).openapi({

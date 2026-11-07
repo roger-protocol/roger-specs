@@ -1,13 +1,7 @@
-import { createErrorSchema } from "@/shared/errors";
 import { createTag } from "@/shared/tags";
 import z from "zod";
 
 export const StorageTag = createTag("Storage", "All routes related to storage objects");
-
-export const StorageError = createErrorSchema("StorageError", [
-  "invalid_credentials",
-  "storage_in_use",
-]);
 
 export const StorageConfig = z.object({
   maxStorageObjectsPerAccount: z.int().openapi({

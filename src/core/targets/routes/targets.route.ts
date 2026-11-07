@@ -1,11 +1,11 @@
 import { apiRegistry, createResponseObject } from "@/shared/openapi";
-import { TargetError, TargetsTag } from "../constants";
+import { TargetsTag } from "../constants";
 import z from "zod";
 import { ProjectId } from "@/core/projects";
 import { EnvironmentId } from "@/core/environments";
-import { AuthError, BearerAuth, ForbiddenError } from "@/core/auth/constants";
+import { BearerAuth, ForbiddenError, UnauthorizedError } from "@/core/auth/constants";
 import { PlaceTarget, Target } from "../schemas/target.schema";
-import { NotFoundError, ServerError, ValidationError } from "@/shared/errors";
+import { ErrorResponse, InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors";
 
 export const GetTargetsURLParams = z.object({
   projectId: ProjectId,
@@ -43,14 +43,12 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully retrieved targets", [Target]),
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target project/environment doesn't exist", [NotFoundError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfully retrieved targets", Target),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });
 
@@ -67,14 +65,12 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully created target", [Target]),
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target project/environment doesn't exist", [NotFoundError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfully created target", Target),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });
 
@@ -91,16 +87,12 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully edited target", [Target]),
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target project/environment/target doesn't exist", [
-      NotFoundError,
-    ]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfully edited target", Target),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });
 
@@ -117,19 +109,16 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully deleted target", [Target]),
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target project/environment/target doesn't exist", [
-      NotFoundError,
-    ]),
+    200: createResponseObject("Successfully deleted target", Target),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+
     409: createResponseObject(
-      "The target is still referenced in one or more deployments and cannot be deleted",
-      [TargetError],
+      "The target is still referenced in one or more deployments and cannot be deleted. Possible error codes: `target_in_use`",
+      ErrorResponse,
     ),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    500: ServerError,
   },
 });

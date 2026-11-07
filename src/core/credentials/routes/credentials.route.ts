@@ -1,10 +1,10 @@
 import { apiRegistry, createResponseObject } from "@/shared/openapi";
-import { CredentialsError, CredentialsTag } from "../constants";
+import { CredentialsTag } from "../constants";
 import z from "zod";
 import { ProjectId } from "@/core/projects";
-import { AuthError, BearerAuth, ForbiddenError } from "@/core/auth/constants";
+import { BearerAuth, ForbiddenError, UnauthorizedError } from "@/core/auth/constants";
 import { ApiKeyCredential, Credential } from "../schemas/credential.schema";
-import { NotFoundError, ServerError, ValidationError } from "@/shared/errors";
+import { ErrorResponse, InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors";
 import { CredentialId } from "../schemas/ids.schemas";
 
 export const GetCredentialsURLParams = z.object({
@@ -60,14 +60,12 @@ apiRegistry.registerPath({
   request: { params: GetCredentialsURLParams },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully listed credentials", [GetCredentialsResonseBody]),
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target project doesn't exist", [NotFoundError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfully listed credentials", GetCredentialsResonseBody),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });
 
@@ -84,14 +82,12 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully created credential", [Credential]),
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target project doesn't exist", [NotFoundError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfully created credential", Credential),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });
 
@@ -108,14 +104,12 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully renamed credential", [Credential]),
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target project/credential doesn't exist", [NotFoundError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfully renamed credential", Credential),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });
 
@@ -132,17 +126,12 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully rotated credential", [Credential]),
-    400: createResponseObject("Invalid request or invalid credential secret", [
-      ValidationError,
-      CredentialsError,
-    ]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target project/credential doesn't exist", [NotFoundError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfully rotated credential", Credential),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });
 
@@ -157,16 +146,15 @@ apiRegistry.registerPath({
   request: { params: DeleteCredentialURLParams },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully deleted credential", [Credential]),
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target project/credential doesn't exist", [NotFoundError]),
-    409: createResponseObject("The target credential is still linked to one or more environments", [
-      CredentialsError,
-    ]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfully deleted credential", Credential),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    409: createResponseObject(
+      "The target credential is still linked to one or more environments. Possible error codes: `credential_in_use`",
+      ErrorResponse,
+    ),
+    500: ServerError,
   },
 });

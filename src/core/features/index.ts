@@ -16,8 +16,6 @@ apiRegistry.registerPath({
   tags: [DiscoveryTag],
   description: "Get the node's supported features and their configuration",
   responses: {
-    200: createResponseObject("Node's supported features and their configuration", [
-      FeatureResponse,
-    ]),
+    200: createResponseObject("Node's supported features and their configuration", FeatureResponse),
   },
 });

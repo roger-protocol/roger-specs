@@ -1,4 +1,5 @@
 import z from "zod";
+import { createResponseObject } from "./openapi";
 
 /**
  * Error type that each domain MUST satisfy
@@ -12,56 +13,26 @@ export type ErrorSchema = z.ZodObject<{
   }>;
 }>;
 
-/**
- * Factory function to create OpenAPI component Zod schemas for API errors
- * @param id The unique component registration id that will be used to identify this schema inside of the generated OpenAPI file
- * @param codes An array containing all of the error strings that this schema is capable of throwing
- * @returns A zod object satisfying the {@link ErrorSchema} type
- * @example
- * ```ts
- * const AuthError = createErrorSchema("AuthError", [
-   "INVALID_SESSION_TOKEN",
-   "INVALID_PASSWORD",
-   "TOKEN_EXPIRED",
- ]);
- * ```
- */
-export function createErrorSchema<
-  const TCode extends readonly [string, ...string[]],
-  const TId extends string,
->(
-  id: TId, // The name that will be used to register that error as an OpenAPI component
-  codes: TCode, // All error codes that may be used
-) {
-  return z
-    .object({
-      error: z.object({
-        type: z.literal(id).openapi({
-          description: "The error type that owns the returned error code",
-          example: id,
-        }),
-        code: z
-          .enum(codes)
-          .openapi({ description: "All application-level error codes", example: codes[0] }),
-        message: z.string().openapi({
-          description: "A human readable string explaining why this error happened",
-          example: `An error happened within the ${id} domain`,
-        }),
-      }),
-    })
-    .openapi(id) satisfies ErrorSchema; // Satisfies does not destroy the types infered by this function, only guarantees its structure
-}
+export const ErrorResponse = z
+  .object({
+    error: z.string().openapi({ description: "A machine-readable error code" }),
+    error_description: z.string().openapi({
+      description: "A human-readable error description",
+    }),
+  })
+  .openapi("Error");
 
-export const ValidationError = createErrorSchema("ValidationError", [
-  "invalid_body",
-  "invalid_params",
-  "invalid_query",
-]);
+export const InvalidRequestError = createResponseObject(
+  "Malformed request body, headers, params or query. Possible error codes: `invalid_request`",
+  ErrorResponse,
+);
 
-export const NotFoundError = createErrorSchema("NotFoundError", ["resource_not_found"]);
+export const NotFoundError = createResponseObject(
+  "The requested resource could not be found on this server or the user doesn't have access to it. Possible params: `resource_not_found`",
+  ErrorResponse,
+);
 
-export const ServerError = createErrorSchema("ServerError", [
-  "internal_server_error",
-  "database_error",
-  "external_service_error",
-]);
+export const ServerError = createResponseObject(
+  "The server couldn't handle your request due to an internal error. Possible error codes: `server_error`",
+  ErrorResponse,
+);

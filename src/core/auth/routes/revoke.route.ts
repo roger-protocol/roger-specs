@@ -1,7 +1,8 @@
 import { apiRegistry, createResponseObject } from "@/shared/openapi";
-import { AuthTag, OAuthError, RevocationError } from "../constants";
+import { AuthTag } from "../constants";
 import z from "zod";
 import { RefreshToken } from "../schemas/ids.schema";
+import { ErrorResponse, ServerError } from "@/shared/errors";
 
 const AccessTokenBody = z
   .object({
@@ -48,10 +49,10 @@ apiRegistry.registerPath({
     200: {
       description: "The session was successfully revoked OR the token was invalid/expired",
     },
-    400: createResponseObject("Malformed request body or missing required token parameter.", [
-      OAuthError,
-      RevocationError,
-    ]),
-    500: createResponseObject("Internal node error during session revocation", [OAuthError]),
+    400: createResponseObject(
+      "Malformed request body or missing required token parameter. Possible error codes: `invalid_request`, `unsupported_token_type`",
+      ErrorResponse,
+    ),
+    500: ServerError,
   },
 });

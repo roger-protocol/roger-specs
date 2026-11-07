@@ -1,9 +1,9 @@
 import { apiRegistry, createResponseObject } from "@/shared/openapi";
-import { StorageError, StorageTag } from "../constants";
-import { AuthError, BearerAuth, ForbiddenError } from "@/core/auth/constants";
+import { StorageTag } from "../constants";
+import { BearerAuth, ForbiddenError, UnauthorizedError } from "@/core/auth/constants";
 import z from "zod";
 import { S3Credentials, S3StorageObject, StorageObject } from "../schemas/storage.schema";
-import { NotFoundError, ServerError, ValidationError } from "@/shared/errors";
+import { ErrorResponse, InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors";
 import { StorageId } from "../schemas/ids.schema";
 
 // Get Storage Objects
@@ -18,14 +18,13 @@ apiRegistry.registerPath({
   tags: [StorageTag],
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully returned storage objects", [
+    200: createResponseObject(
+      "Successfully returned storage objects",
       GetStorageObjectsResponseBody,
-    ]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    ),
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    500: ServerError,
   },
 });
 
@@ -53,16 +52,14 @@ apiRegistry.registerPath({
   request: { body: { content: { "application/json": { schema: LinkStorageObjectRequestBody } } } },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfull linked the new storage object", [StorageObject]),
-    400: createResponseObject("Invalid request or invalid credentials", [
-      ValidationError,
-      StorageError,
-    ]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfull linked the new storage object", StorageObject),
+    400: createResponseObject(
+      "Invalid request or invalid credentials. Possible error codes: `invalid_request`, `invalid_credentials`",
+      ErrorResponse,
+    ),
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    500: ServerError,
   },
 });
 
@@ -85,14 +82,12 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfull renamed the storage object", [StorageObject]),
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target storage object doesn't exist", [NotFoundError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfull renamed the storage object", StorageObject),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });
 
@@ -117,17 +112,12 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfull rotated the storage object", [StorageObject]),
-    400: createResponseObject("Invalid request or invalid credentials", [
-      ValidationError,
-      StorageError,
-    ]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target storage object doesn't exist", [NotFoundError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfull rotated the storage object", StorageObject),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });
 
@@ -149,16 +139,15 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfull deleted the storage object", [StorageObject]),
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target storage object doesn't exist", [NotFoundError]),
-    409: createResponseObject("The target storage object is still used in one or more project", [
-      StorageError,
-    ]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfull deleted the storage object", StorageObject),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    409: createResponseObject(
+      "The target storage object is still used in one or more project. Possible error codes: `storage_in_use`",
+      ErrorResponse,
+    ),
+    500: ServerError,
   },
 });

@@ -1,11 +1,8 @@
-import { createErrorSchema } from "@/shared/errors";
 import { createTag } from "@/shared/tags";
 import z from "zod";
 import { Project } from "./schemas/project.schema";
 
 export const ProjectTag = createTag("Project", "Routes used to get/create/delete/update projects");
-
-export const ProjectError = createErrorSchema("ProjectError", ["max_projects_exceeded"]);
 
 export const ProjectsConfig = z.object({
   maxProjectsPerAccount: z

@@ -28,6 +28,6 @@ apiRegistry.registerPath({
   description: "Get node information and identification",
   tags: [DiscoveryTag],
   responses: {
-    200: createResponseObject("Node information and identification", [VersionResponse]),
+    200: createResponseObject("Node information and identification", VersionResponse),
   },
 });

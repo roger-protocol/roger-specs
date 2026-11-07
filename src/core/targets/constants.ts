@@ -1,4 +1,3 @@
-import { createErrorSchema } from "@/shared/errors";
 import { createTag } from "@/shared/tags";
 import z from "zod";
 import { TargetKind } from "./schemas/target.schema";
@@ -7,8 +6,6 @@ export const TargetsTag = createTag(
   "Targets",
   "Routes used to fetch/create/update/delete targets linked to environments",
 );
-
-export const TargetError = createErrorSchema("TargetError", ["target_in_use"]);
 
 export const TargetsConfig = z.object({
   maxTargetsPerProject: z
