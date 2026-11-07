@@ -16,18 +16,6 @@ apiRegistry.registerComponent("securitySchemes", BearerAuth, {
   description: "Enter the access_token returned by /auth/token",
 });
 
-export const OAuthError = z
-  .object({
-    error: z
-      .enum(["invalid_request", "invalid_grant", "unsupported_grant_type", "server_error"])
-      .openapi({ description: "Standard OAuth 2.1 error code", example: "invalid_grant" }),
-    error_description: z.string().openapi({
-      description: "A human-readable error description",
-      example: "The provided authorization code is invalid",
-    }),
-  })
-  .openapi("OAuthError");
-
 export const UnauthorizedError = createResponseObject(
   "The request lacks valid authentication credentials. Possible error codes: `invalid_token`",
   ErrorResponse,
