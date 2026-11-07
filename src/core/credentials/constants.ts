@@ -1,4 +1,3 @@
-import { createErrorSchema } from "@/shared/errors";
 import { createTag } from "@/shared/tags";
 import z from "zod";
 
@@ -6,11 +5,6 @@ export const CredentialsTag = createTag(
   "Credentials",
   "Routes related to creating/fetching/editing/deleting/rotating credentials",
 );
-
-export const CredentialsError = createErrorSchema("CredentialsError", [
-  "credential_in_use",
-  "invalid_secret",
-]);
 
 export const CredentialsConfig = z.object({
   maxCredentialsPerProject: z

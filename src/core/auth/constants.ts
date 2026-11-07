@@ -1,5 +1,5 @@
-import { createErrorSchema } from "@/shared/errors";
-import { apiRegistry } from "@/shared/openapi";
+import { ErrorResponse } from "@/shared/errors";
+import { apiRegistry, createResponseObject } from "@/shared/openapi";
 import { createTag } from "@/shared/tags";
 import z from "zod";
 
@@ -28,16 +28,14 @@ export const OAuthError = z
   })
   .openapi("OAuthError");
 
-export const AuthError = createErrorSchema("AuthError", [
-  "unauthorized",
-  "token_invalid",
-  "token_expired",
-]);
-
-export const ForbiddenError = createErrorSchema("ForbiddenError", [
-  "forbidden",
-  "insufficient_permissions",
-]);
+export const UnauthorizedError = createResponseObject(
+  "The request lacks valid authentication credentials. Possible error codes: `invalid_token`",
+  ErrorResponse,
+);
+export const ForbiddenError = createResponseObject(
+  "The authenticated user does not have the permissions to perform this action. Possible error codes: `insufficient_permissions`",
+  ErrorResponse,
+);
 
 export const RevocationError = z
   .object({

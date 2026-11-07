@@ -1,7 +1,8 @@
 import { apiRegistry, createResponseObject } from "@/shared/openapi";
-import { AuthTag, OAuthError } from "../constants";
+import { AuthTag } from "../constants";
 import z from "zod";
 import { AuthorizationCode, RefreshToken } from "../schemas/ids.schema";
+import { ErrorResponse, ServerError } from "@/shared/errors";
 
 const AuthorizationCodeGrant = z
   .object({
@@ -67,15 +68,14 @@ apiRegistry.registerPath({
     },
   },
   responses: {
-    200: createResponseObject("Successfully authenticated, returns a JWT and Refresh Token", [
+    200: createResponseObject(
+      "Successfully authenticated, returns a JWT and Refresh Token",
       TokenEndpointRequestResponse,
-    ]),
-    400: createResponseObject(
-      "Invalid request, expired authorization code / refresh token, unsupported grant type or PKCE verifier mismatch.",
-      [OAuthError],
     ),
-    500: createResponseObject("Internal node error during JWT creation or database operations", [
-      OAuthError,
-    ]),
+    400: createResponseObject(
+      "Invalid request, expired authorization code / refresh token, unsupported grant type or PKCE verifier mismatch. Possible error codes: `invalid_request`, `invalid_grant`, `unsupported_grant_type`",
+      ErrorResponse,
+    ),
+    500: ServerError,
   },
 });

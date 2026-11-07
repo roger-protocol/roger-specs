@@ -1,8 +1,8 @@
 import { apiRegistry, createResponseObject } from "@/shared/openapi";
-import { AuthError, BearerAuth, ForbiddenError } from "../constants";
+import { BearerAuth, ForbiddenError, UnauthorizedError } from "../constants";
 import { UserSession } from "../schemas/session.schema";
 import z from "zod";
-import { NotFoundError, ServerError, ValidationError } from "@/shared/errors";
+import { ErrorResponse, InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors";
 import { createTag } from "@/shared/tags";
 import { SessionId } from "../schemas/ids.schema";
 
@@ -22,11 +22,18 @@ apiRegistry.registerPath({
   tags: [SessionsTag],
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("The request succeeded and returned all active sessions", [
+    200: createResponseObject(
+      "The request succeeded and returned all active sessions",
       ListSessionsResponseBody,
-    ]),
-    401: createResponseObject("The server was unable to authenticate the user", [AuthError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    ),
+    401: createResponseObject(
+      "The server was unable to authenticate the user. Possible error codes: `invalid_token`",
+      ErrorResponse,
+    ),
+    500: createResponseObject(
+      "The server couldn't handle the request. Possible error codes: `server_error`",
+      ErrorResponse,
+    ),
   },
 });
 
@@ -45,13 +52,11 @@ apiRegistry.registerPath({
     204: {
       description: "Successfully revoked session",
     },
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server was unable to authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target session doesn't exist", [NotFoundError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });
 
@@ -68,7 +73,7 @@ apiRegistry.registerPath({
     204: {
       description: "Successfully revoked sessions",
     },
-    401: createResponseObject("The server was unable to authenticate the user", [AuthError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    401: UnauthorizedError,
+    500: ServerError,
   },
 });

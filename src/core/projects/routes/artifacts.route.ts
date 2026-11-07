@@ -1,9 +1,9 @@
 import { apiRegistry, createResponseObject } from "@/shared/openapi";
 import { ProjectTag } from "../constants";
-import { AuthError, BearerAuth, ForbiddenError } from "@/core/auth/constants";
+import { BearerAuth, ForbiddenError, UnauthorizedError } from "@/core/auth/constants";
 import z from "zod";
 import { ProjectId } from "../schemas/ids.schemas";
-import { NotFoundError, ServerError, ValidationError } from "@/shared/errors";
+import { InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors";
 
 export const CheckArtifactURLParams = z.object({
   projectId: ProjectId,
@@ -34,13 +34,11 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully checked hashes", [CheckArtifactResponseBody]),
-    400: createResponseObject("Invalid request", [ValidationError]),
-    401: createResponseObject("The server couldn't authenticate the user", [AuthError]),
-    403: createResponseObject("The user doesn't have the permission to perform this action", [
-      ForbiddenError,
-    ]),
-    404: createResponseObject("The target project doesn't exist", [NotFoundError]),
-    500: createResponseObject("The server couldn't handle the request", [ServerError]),
+    200: createResponseObject("Successfully checked hashes", CheckArtifactResponseBody),
+    400: InvalidRequestError,
+    401: UnauthorizedError,
+    403: ForbiddenError,
+    404: NotFoundError,
+    500: ServerError,
   },
 });
