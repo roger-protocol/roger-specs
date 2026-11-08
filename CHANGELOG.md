@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0-beta.0](https://github.com/roger-protocol/roger-specs/compare/v0.2.2...v0.3.0-beta.0) (2026-11-08)
+
+### Features
+
+* make error_description optional ([0a8dfe8](https://github.com/roger-protocol/roger-specs/commit/0a8dfe80de363a6631450564c3138d2c83e4c770))
+* make every union schemas components ([5314ec3](https://github.com/roger-protocol/roger-specs/commit/5314ec3d386796403d6b638d09602798fddc5595))
+* replace domain specific error schemas by a global error schema ([86e495f](https://github.com/roger-protocol/roger-specs/commit/86e495f3bcc32b18db9afc48d44776aa3507d384))
+
+### Bug Fixes
+
+* incorrect use of "in" to check if a key is in a map ([77a6b53](https://github.com/roger-protocol/roger-specs/commit/77a6b5307c96b440e953c8bcb3c58a14cd7ca4f0))
+
 ## [0.2.2](https://github.com/roger-protocol/roger-specs/compare/v0.2.1...v0.2.2) (2026-10-12)
 
 ### Bug Fixes
