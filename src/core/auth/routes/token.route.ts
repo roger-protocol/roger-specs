@@ -44,14 +44,12 @@ export const TokenEndpointRequestResponse = z.object({
     .openapi({ description: "Short-lived JWT access token", example: "eyJhbGciOiJSUzI1NiIs..." }),
   token_type: z
     .literal("Bearer")
-    .default("Bearer")
     .openapi({ description: "The type of the issued token (standard OAuth 2.1 token type)" }),
   expires_in: z
     .int()
     .positive()
-    .openapi({ description: "The lifetime in seconds of the access_token", example: 900 })
-    .optional(),
-  refresh_token: RefreshToken.optional(),
+    .openapi({ description: "The lifetime in seconds of the access_token", example: 900 }),
+  refresh_token: RefreshToken,
 });
 
 apiRegistry.registerPath({
