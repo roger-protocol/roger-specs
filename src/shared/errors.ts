@@ -1,23 +1,11 @@
 import z from "zod";
 import { createResponseObject } from "./openapi";
 
-/**
- * Error type that each domain MUST satisfy
- * It ensures an identical and standardized error structure accross API calls
- */
-export type ErrorSchema = z.ZodObject<{
-  error: z.ZodObject<{
-    type: z.ZodLiteral<string>;
-    code: z.ZodEnum<Record<string, string>>;
-    message: z.ZodString;
-  }>;
-}>;
-
 export const ErrorResponse = z
   .object({
     error: z.string().openapi({ description: "A machine-readable error code" }),
-    error_description: z.string().openapi({
-      description: "A human-readable error description",
+    error_description: z.string().optional().openapi({
+      description: "An optional human-readable error description",
     }),
   })
   .openapi("Error");
