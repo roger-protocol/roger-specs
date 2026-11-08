@@ -75,7 +75,7 @@ apiRegistry.registerPath({
       TokenEndpointRequestResponse,
     ),
     400: createResponseObject(
-      "Invalid request, expired authorization code / refresh token, unsupported grant type or PKCE verifier mismatch. Possible error codes: `invalid_request`, `invalid_grant`, `unsupported_grant_type`",
+      "Invalid request, expired authorization code / refresh token, or PKCE verifier mismatch. Possible error codes: `invalid_request`, `invalid_grant`, `unsupported_grant_type`",
       ErrorResponse,
     ),
     500: ServerError,
