@@ -37,10 +37,10 @@ const LinkS3StorageObjectRequestBody = S3StorageObject.pick({
   storage_endpoint: true,
 })
   .extend(S3Credentials.shape)
-  .openapi({ title: "S3 Compatible" });
-export const LinkStorageObjectRequestBody = z.discriminatedUnion("kind", [
-  LinkS3StorageObjectRequestBody,
-]);
+  .openapi("S3CompatibleStorageInfos", { title: "S3 Compatible" });
+export const LinkStorageObjectRequestBody = z
+  .discriminatedUnion("kind", [LinkS3StorageObjectRequestBody])
+  .openapi("LinkStorageObjectRequestBody");
 
 apiRegistry.registerPath({
   method: "post",
@@ -92,9 +92,9 @@ apiRegistry.registerPath({
 });
 
 // Rotate a Storage Object
-export const RotateStorageObjectRequestBody = z.union([
-  S3Credentials.openapi({ title: "S3 Credentials" }),
-]);
+export const RotateStorageObjectRequestBody = z
+  .union([S3Credentials])
+  .openapi("RotateStorageObjectRequestBody");
 export const RotateStorageObjectRequestURLParams = z.object({
   storageId: StorageId,
 });

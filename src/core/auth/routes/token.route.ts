@@ -23,7 +23,7 @@ const AuthorizationCodeGrant = z
       example: "Roger CLI (Windows 11)",
     }),
   })
-  .openapi({ title: "Authorization Code" });
+  .openapi("AuthorizationCodeGrant", { title: "Authorization Code" });
 
 const RefreshTokenGrant = z
   .object({
@@ -32,9 +32,11 @@ const RefreshTokenGrant = z
       description: "The long-lived refresh token issued by the node on last refresh",
     }),
   })
-  .openapi({ title: "Refresh Token" });
+  .openapi("RefreshTokenGrant", { title: "Refresh Token" });
 
-export const TokenEndpointRequestBody = z.union([AuthorizationCodeGrant, RefreshTokenGrant]);
+export const TokenEndpointRequestBody = z
+  .discriminatedUnion("grant_type", [AuthorizationCodeGrant, RefreshTokenGrant])
+  .openapi("TokenRequestBody");
 
 export const TokenEndpointRequestResponse = z.object({
   access_token: z

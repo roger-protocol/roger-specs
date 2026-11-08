@@ -2,17 +2,21 @@ import z from "zod";
 import { StorageId } from "./ids.schema";
 import { UserId } from "@/core/auth";
 
-const UserStorageOwner = z.object({
-  kind: z.literal("user").openapi({
-    description: "The type of owner that owns the storage object",
-    example: "user",
-  }),
-  id: UserId,
-});
+const UserStorageOwner = z
+  .object({
+    kind: z.literal("user").openapi({
+      description: "The type of owner that owns the storage object",
+      example: "user",
+    }),
+    id: UserId,
+  })
+  .openapi("UserStorageOwner", { title: "User" });
 
 export const StorageOwner = z
   .discriminatedUnion("kind", [UserStorageOwner])
-  .openapi({ description: "An object representing the ressource that owns the storage object" });
+  .openapi("StorageOwner", {
+    description: "An object representing the ressource that owns the storage object",
+  });
 
 const StorageBase = z.object({
   id: StorageId,
@@ -30,15 +34,17 @@ const StorageBase = z.object({
   }),
 });
 
-export const S3Credentials = z.object({
-  access_key_id: z
-    .string()
-    .openapi({ description: "The S3 access key id", example: "SomeAccessKeyId" }),
-  secret_access_key: z.string().openapi({
-    description: "The secret key associated with the Access Key ID",
-    example: "SuperSecretKey",
-  }),
-});
+export const S3Credentials = z
+  .object({
+    access_key_id: z
+      .string()
+      .openapi({ description: "The S3 access key id", example: "SomeAccessKeyId" }),
+    secret_access_key: z.string().openapi({
+      description: "The secret key associated with the Access Key ID",
+      example: "SuperSecretKey",
+    }),
+  })
+  .openapi("S3Credentials", { title: "S3 Credentials" });
 
 export const S3StorageObject = StorageBase.extend({
   kind: z
@@ -62,7 +68,7 @@ export const S3StorageObject = StorageBase.extend({
     description: "The ISO timestamp when the S3 storage bucket was last updated on the node",
     example: "2026-09-06T16:31:52.845Z",
   }),
-}).openapi({ title: "S3 Compatible" });
+}).openapi("S3CompatibleStorage", { title: "S3 Compatible" });
 
 export const InternalStorageObject = StorageBase.extend({
   kind: z
@@ -80,6 +86,8 @@ export const InternalStorageObject = StorageBase.extend({
     description: "The ISO timestamp when the internal storage object was last updated",
     example: "2026-09-06T16:31:52.845Z",
   }),
-}).openapi({ title: "Internal Storage" });
+}).openapi("InternalStorage", { title: "Internal" });
 
-export const StorageObject = z.discriminatedUnion("kind", [S3StorageObject, InternalStorageObject]);
+export const StorageObject = z
+  .discriminatedUnion("kind", [S3StorageObject, InternalStorageObject])
+  .openapi("StorageObject");
