@@ -2,10 +2,9 @@ import { DeploymentId } from "@/core/deployments";
 import { EnvironmentId } from "@/core/environments";
 import z from "zod";
 
-export const TargetKind = z.enum(["place"]);
 export const PlaceTarget = z
   .object({
-    kind: TargetKind.openapi({ description: "The type of ressource the target points to" }),
+    kind: z.literal("place").openapi({ description: "The type of the target", example: "place" }),
     name: z.string().openapi({
       description: "The name used in the config file to reference this place",
       example: "arena",
@@ -22,6 +21,6 @@ export const PlaceTarget = z
       .datetime()
       .openapi({ description: "The ISO timestamp at which the place was last updated" }),
   })
-  .openapi({ title: "Place" });
+  .openapi("PlaceTarget", { title: "Place" });
 
-export const Target = z.discriminatedUnion("kind", [PlaceTarget]);
+export const Target = z.discriminatedUnion("kind", [PlaceTarget]).openapi("Target");

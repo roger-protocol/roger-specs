@@ -22,8 +22,10 @@ const CreateCredentialBodyApiKey = ApiKeyCredential.pick({ name: true, kind: tru
       example: "ai3ypnLUgkuOqm9uG978X+xetx9rDowo9G4DtQQIlKY...",
     }),
   })
-  .openapi({ title: "API Key" });
-export const CreateCredentialBody = z.discriminatedUnion("kind", [CreateCredentialBodyApiKey]);
+  .openapi("APIKeyInfos", { title: "API Key" });
+export const CreateCredentialRequestBody = z
+  .discriminatedUnion("kind", [CreateCredentialBodyApiKey])
+  .openapi("CreateCredentialRequestBody");
 
 export const RenameCredentialURLParams = z.object({
   projectId: ProjectId,
@@ -42,8 +44,10 @@ const RotateCredentialBodyApiKey = z
       example: "ai3ypnLUgkuOqm9uG978X+xetx9rDowo9G4DtQQIlKY...",
     }),
   })
-  .openapi({ title: "API Key" });
-export const RotateCredentialBody = z.union([RotateCredentialBodyApiKey]);
+  .openapi("APIKeySecret", { title: "API Key" });
+export const RotateCredentialBody = z
+  .union([RotateCredentialBodyApiKey])
+  .openapi("RotateCredentialRequestBody");
 
 export const DeleteCredentialURLParams = z.object({
   projectId: ProjectId,
@@ -78,7 +82,7 @@ apiRegistry.registerPath({
   tags: [CredentialsTag],
   request: {
     params: CreateCredentialURLParams,
-    body: { content: { "application/json": { schema: CreateCredentialBody } } },
+    body: { content: { "application/json": { schema: CreateCredentialRequestBody } } },
   },
   security: [{ [BearerAuth]: [] }],
   responses: {

@@ -1,6 +1,5 @@
 import { createTag } from "@/shared/tags";
 import z from "zod";
-import { TargetKind } from "./schemas/target.schema";
 
 export const TargetsTag = createTag(
   "Targets",
@@ -18,6 +17,6 @@ export const TargetsConfig = z.object({
     .int()
     .openapi({ description: "The maximum length of a target name", example: 64 }),
   supportedTargetKinds: z
-    .array(TargetKind)
+    .array(z.enum(["place"]))
     .openapi({ description: "Target kinds supported by the node", example: ["place"] }),
 });

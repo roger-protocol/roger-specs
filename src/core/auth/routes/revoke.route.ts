@@ -12,22 +12,22 @@ const AccessTokenBody = z
     }),
     token_type_hint: z
       .literal("access_token")
-      .optional()
       .openapi({ description: "Hint to optimize node lookup" }),
   })
-  .openapi({ title: "Access Token" });
+  .openapi("AccessTokenRevokeGrant", { title: "Access Token" });
 
 const RefreshTokenBody = z
   .object({
     token: RefreshToken,
     token_type_hint: z
       .literal("refresh_token")
-      .optional()
       .openapi({ description: "Hint to optimize node lookup" }),
   })
-  .openapi({ title: "Refresh Token" });
+  .openapi("RefreshTokenRevokeGrant", { title: "Refresh Token" });
 
-export const RevokeEndpointRequestBody = z.union([AccessTokenBody, RefreshTokenBody]);
+export const RevokeEndpointRequestBody = z
+  .discriminatedUnion("token_type_hint", [AccessTokenBody, RefreshTokenBody])
+  .openapi("RevokeRequestBody");
 
 apiRegistry.registerPath({
   method: "post",
