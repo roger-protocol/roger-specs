@@ -1,7 +1,7 @@
 import { apiRegistry, createResponseObject } from "@/shared/openapi";
 import { AuthTag } from "../constants";
 import z from "zod";
-import { ErrorResponse } from "@/shared/errors";
+import { ErrorResponse, ServerError } from "@/shared/errors";
 
 export const OAuthLoginUrlParams = z.object({
   provider: z.string().openapi({ description: "The ID of the provider to use", example: "google" }),
@@ -37,6 +37,10 @@ apiRegistry.registerPath({
     302: {
       description: "Redirect to the OAuth provider's authorization endpoint",
     },
-    400: createResponseObject("Invalid parameters", ErrorResponse),
+    400: createResponseObject(
+      "Invalid request / Unsupported provider / Illegal redirect uri. Possible error codes: `invalid_request`, `invalid_redirect_uri`, `unsupported_provider`",
+      ErrorResponse,
+    ),
+    500: ServerError,
   },
 });
