@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0-beta.1](https://github.com/roger-protocol/roger-specs/compare/v0.3.0-beta.0...v0.3.0-beta.1) (2026-11-09)
+
+### Features
+
+* add error codes to the /auth/oauth route ([fb727a3](https://github.com/roger-protocol/roger-specs/commit/fb727a3b023d2db5d937c70a9796293d62663425))
+* require the token endpoint to return a refresh_token ([f7f961d](https://github.com/roger-protocol/roger-specs/commit/f7f961d64ad1a3c447ce0c9eedd2d21de60998ba))
+
 ## [0.3.0-beta.0](https://github.com/roger-protocol/roger-specs/compare/v0.2.2...v0.3.0-beta.0) (2026-11-08)
 
 ### Features
