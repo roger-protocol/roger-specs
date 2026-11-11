@@ -63,7 +63,7 @@ apiRegistry.registerPath({
   request: {
     body: {
       content: {
-        "application/json": { schema: TokenEndpointRequestBody },
+        "application/x-www-form-urlencoded": { schema: TokenEndpointRequestBody },
       },
     },
   },
