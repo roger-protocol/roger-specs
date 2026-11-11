@@ -39,7 +39,7 @@ apiRegistry.registerPath({
   request: {
     body: {
       content: {
-        "application/json": {
+        "application/x-www-form-urlencoded": {
           schema: RevokeEndpointRequestBody,
         },
       },
