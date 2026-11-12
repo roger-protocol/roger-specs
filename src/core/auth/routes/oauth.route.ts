@@ -5,6 +5,7 @@ import { ErrorResponse, ServerError } from "@/shared/errors";
 
 export const OAuthLoginUrlParams = z.object({
   provider: z.string().openapi({ description: "The ID of the provider to use", example: "google" }),
+  response_type: z.literal("code"),
   code_challenge: z.string().openapi({
     description: "See [RFC 7636](https://www.rfc-editor.org/info/rfc7636/#section-4.2)",
   }),
@@ -38,7 +39,7 @@ apiRegistry.registerPath({
       description: "Redirect to the OAuth provider's authorization endpoint",
     },
     400: createResponseObject(
-      "Invalid request / Unsupported provider / Illegal redirect uri. Possible error codes: `invalid_request`, `invalid_redirect_uri`, `unsupported_provider`",
+      "Invalid request / Unsupported provider / Illegal redirect uri. Possible error codes: `invalid_request`, `invalid_redirect_uri`, `unsupported_provider`, `unsupported_response_type`",
       ErrorResponse,
     ),
     500: ServerError,
