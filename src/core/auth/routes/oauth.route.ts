@@ -8,7 +8,7 @@ export const OAuthLoginUrlParams = z.object({
   code_challenge: z.string().openapi({
     description: "See [RFC 7636](https://www.rfc-editor.org/info/rfc7636/#section-4.2)",
   }),
-  code_challenge_method: z.literal("S256").default("S256").openapi({
+  code_challenge_method: z.literal("S256").openapi({
     description: "The hashing method used to create the code challenge (RFC 7636)",
   }),
   redirect_uri: z.url().openapi({
@@ -16,7 +16,7 @@ export const OAuthLoginUrlParams = z.object({
       "The client callback URL the user will be redirected to with a server-issued authorization code",
     example: "http://localhost:3000/oauth/callback/{provider}",
   }),
-  state: z.string().openapi({
+  state: z.string().optional().openapi({
     description:
       "A high-entropy unique CSRF token that will be passed back in the loopback callback",
   }),
