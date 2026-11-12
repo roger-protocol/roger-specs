@@ -4,39 +4,29 @@ import z from "zod";
 import { AuthorizationCode, RefreshToken } from "../schemas/ids.schema";
 import { ErrorResponse, ServerError } from "@/shared/errors";
 
-const AuthorizationCodeGrant = z
-  .object({
-    grant_type: z.literal("authorization_code").openapi({ description: "OAuth 2.1 grant type" }),
-    code: AuthorizationCode.openapi({
-      description: "The single-use authorization code recieved from the loopback callback",
-    }),
-    code_verifier: z.string().openapi({
-      description:
-        "The raw PKCE code verifier used to generate the code_challenge ([RFC 7636](https://www.rfc-editor.org/info/rfc7636/#section-4.1))",
-    }),
-    redirect_uri: z.string().openapi({
-      description:
-        "The redirect uri passed to the first PKCE request ([OAuth 2.1](https://oauth.net/2.1/))",
-    }),
-    client_name: z.string().optional().openapi({
-      description: "A user-friendly client name bound to the user's session",
-      example: "Roger CLI (Windows 11)",
-    }),
-  })
-  .openapi("AuthorizationCodeGrant", { title: "Authorization Code" });
-
-const RefreshTokenGrant = z
-  .object({
-    grant_type: z.literal("refresh_token").openapi({ description: "OAuth 2.1 grant type" }),
-    refresh_token: RefreshToken.openapi({
-      description: "The long-lived refresh token issued by the node on last refresh",
-    }),
-  })
-  .openapi("RefreshTokenGrant", { title: "Refresh Token" });
-
-export const TokenEndpointRequestBody = z
-  .discriminatedUnion("grant_type", [AuthorizationCodeGrant, RefreshTokenGrant])
-  .openapi("TokenRequestBody");
+const TokenEndpointRequestBody = z.object({
+  grant_type: z
+    .enum(["authorization_code", "refresh_token"])
+    .openapi({ description: "OAuth 2.1 grant type" }),
+  code: AuthorizationCode.optional().openapi({
+    description: "The single-use authorization code recieved from the loopback callback",
+  }),
+  code_verifier: z.string().optional().openapi({
+    description:
+      "The raw PKCE code verifier used to generate the code_challenge ([RFC 7636](https://www.rfc-editor.org/info/rfc7636/#section-4.1))",
+  }),
+  redirect_uri: z.string().optional().openapi({
+    description:
+      "The redirect uri passed to the first PKCE request ([OAuth 2.1](https://oauth.net/2.1/))",
+  }),
+  client_name: z.string().optional().openapi({
+    description: "A user-friendly client name bound to the user's session",
+    example: "Roger CLI (Windows 11)",
+  }),
+  refresh_token: RefreshToken.optional().openapi({
+    description: "The long-lived refresh token issued by the node on last refresh",
+  }),
+});
 
 export const TokenEndpointRequestResponse = z.object({
   access_token: z
