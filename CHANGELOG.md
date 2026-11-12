@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0-beta.2](https://github.com/roger-protocol/roger-specs/compare/v0.3.0-beta.1...v0.3.0-beta.2) (2026-11-12)
+
+### Features
+
+* add response_type to /auth/oauth as per RFC 6749 section 4.2.1 ([3eb2d6e](https://github.com/roger-protocol/roger-specs/commit/3eb2d6e5d7473cd47884fe72f117eb602d9f5308))
+* make state optional in /auth/oauth as per RFC 6749 Section 4.1.1 ([d43e3ce](https://github.com/roger-protocol/roger-specs/commit/d43e3ce87a2e79ef97d7bc15f5e08648049f14db))
+
+### Bug Fixes
+
+* change authentication routes body content type from json to ([95838bb](https://github.com/roger-protocol/roger-specs/commit/95838bbe3212052445a46478a110e838635d14fb))
+* remove unions when using x-www-form-urlencoded ([aa57ca6](https://github.com/roger-protocol/roger-specs/commit/aa57ca659e3d06a7faf4851936abfc06a01f5565))
+
 ## [0.3.0-beta.1](https://github.com/roger-protocol/roger-specs/compare/v0.3.0-beta.0...v0.3.0-beta.1) (2026-11-09)
 
 ### Features
