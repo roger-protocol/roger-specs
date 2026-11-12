@@ -1,33 +1,16 @@
 import { apiRegistry, createResponseObject } from "@/shared/openapi";
 import { AuthTag } from "../constants";
 import z from "zod";
-import { RefreshToken } from "../schemas/ids.schema";
 import { ErrorResponse, ServerError } from "@/shared/errors";
 
-const AccessTokenBody = z
-  .object({
-    token: z.string().openapi({
-      description: "A valid short-lived access token (JWT)",
-      example: "eyJhbGciOiJSUzI1NiIs...",
-    }),
-    token_type_hint: z
-      .literal("access_token")
-      .openapi({ description: "Hint to optimize node lookup" }),
-  })
-  .openapi("AccessTokenRevokeGrant", { title: "Access Token" });
-
-const RefreshTokenBody = z
-  .object({
-    token: RefreshToken,
-    token_type_hint: z
-      .literal("refresh_token")
-      .openapi({ description: "Hint to optimize node lookup" }),
-  })
-  .openapi("RefreshTokenRevokeGrant", { title: "Refresh Token" });
-
-export const RevokeEndpointRequestBody = z
-  .discriminatedUnion("token_type_hint", [AccessTokenBody, RefreshTokenBody])
-  .openapi("RevokeRequestBody");
+const RevokeEndpointRequestBody = z.object({
+  token: z.string().openapi({
+    description: "A valid short-lived access token (JWT) or refresh token",
+  }),
+  token_type_hint: z
+    .enum(["access_token", "refresh_token"])
+    .openapi({ description: "Hint to optimize node lookup" }),
+});
 
 apiRegistry.registerPath({
   method: "post",
