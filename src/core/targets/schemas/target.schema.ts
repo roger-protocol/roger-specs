@@ -17,7 +17,7 @@ export const PlaceTarget = z
     created_at: z.iso
       .datetime()
       .openapi({ description: "The ISO timestamp at which the place was registered" }),
-    last_updated_at: z.iso
+    updated_at: z.iso
       .datetime()
       .openapi({ description: "The ISO timestamp at which the place was last updated" }),
   })
