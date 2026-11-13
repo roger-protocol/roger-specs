@@ -9,6 +9,7 @@ const RevokeEndpointRequestBody = z.object({
   }),
   token_type_hint: z
     .enum(["access_token", "refresh_token"])
+    .optional()
     .openapi({ description: "Hint to optimize node lookup" }),
 });
 
