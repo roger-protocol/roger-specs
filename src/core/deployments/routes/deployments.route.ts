@@ -37,7 +37,7 @@ export const CreateDeploymentURLParams = z.object({
   projectId: ProjectId,
 });
 export const CreateDeploymentRequestBody = z.object({
-  environmentId: Deployment.shape.environmentId,
+  environment_id: Deployment.shape.environment_id,
   version: Deployment.shape.version,
   action: z.enum(["deploy", "stage"]).openapi({
     description: "The action that should be done on the deployment after upload",
