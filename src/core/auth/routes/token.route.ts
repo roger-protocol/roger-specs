@@ -9,7 +9,7 @@ const TokenEndpointRequestBody = z.object({
     .enum(["authorization_code", "refresh_token"])
     .openapi({ description: "OAuth 2.1 grant type" }),
   code: AuthorizationCode.optional().openapi({
-    description: "The single-use authorization code recieved from the loopback callback",
+    description: "The single-use authorization code received from the loopback callback",
   }),
   code_verifier: z.string().optional().openapi({
     description:

@@ -50,7 +50,7 @@ apiRegistry.registerPath({
   operationId: "createEnvironment",
   summary: "Create a new Environment",
   description:
-    "Create a new environment under the specified project. You must pass a universe id to link the environment to an exisiting universe for now since Roblox doesn't allow universe creation using API keys yet. Note: The environment name is immutable and must be in lowercase.",
+    "Create a new environment under the specified project. You must pass a universe id to link the environment to an existing universe for now since Roblox doesn't allow universe creation using API keys yet. Note: The environment name is immutable and must be in lowercase.",
   tags: [EnvironmentsTag],
   security: [{ [BearerAuth]: [] }],
   request: {

@@ -16,7 +16,7 @@ export const InvalidRequestError = createResponseObject(
 );
 
 export const NotFoundError = createResponseObject(
-  "The requested resource could not be found on this server or the user doesn't have access to it. Possible params: `resource_not_found`",
+  "The requested resource could not be found on this server or the user doesn't have access to it. Possible error codes: `resource_not_found`",
   ErrorResponse,
 );
 
