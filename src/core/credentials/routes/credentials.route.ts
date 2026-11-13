@@ -82,7 +82,10 @@ apiRegistry.registerPath({
   tags: [CredentialsTag],
   request: {
     params: CreateCredentialURLParams,
-    body: { content: { "application/json": { schema: CreateCredentialRequestBody } } },
+    body: {
+      required: true,
+      content: { "application/json": { schema: CreateCredentialRequestBody } },
+    },
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
@@ -104,7 +107,7 @@ apiRegistry.registerPath({
   tags: [CredentialsTag],
   request: {
     params: RenameCredentialURLParams,
-    body: { content: { "application/json": { schema: RenameCredentialBody } } },
+    body: { required: true, content: { "application/json": { schema: RenameCredentialBody } } },
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
@@ -126,7 +129,7 @@ apiRegistry.registerPath({
   tags: [CredentialsTag],
   request: {
     params: RotateCredentialURLParams,
-    body: { content: { "application/json": { schema: RotateCredentialBody } } },
+    body: { required: true, content: { "application/json": { schema: RotateCredentialBody } } },
   },
   security: [{ [BearerAuth]: [] }],
   responses: {

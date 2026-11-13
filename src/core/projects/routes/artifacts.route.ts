@@ -30,7 +30,7 @@ apiRegistry.registerPath({
   tags: [ProjectTag],
   request: {
     params: CheckArtifactURLParams,
-    body: { content: { "application/json": { schema: CheckArtifactRequestBody } } },
+    body: { required: true, content: { "application/json": { schema: CheckArtifactRequestBody } } },
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
