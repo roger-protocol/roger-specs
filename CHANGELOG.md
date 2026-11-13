@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.3.0-beta.3](https://github.com/roger-protocol/roger-specs/compare/v0.3.0-beta.2...v0.3.0-beta.3) (2026-11-13)
+
+### Features
+
+* change all unions for discriminatedUnions ([07fe3c9](https://github.com/roger-protocol/roger-specs/commit/07fe3c94a832ab5e1d891c251f27a2778a7d2d03))
+
+### Bug Fixes
+
+* fix list response schemas being of type "object" instead of type ([63abc25](https://github.com/roger-protocol/roger-specs/commit/63abc250923a251264f62e36adb3fbdecf08bd28))
+* fix the whole place array marked as binary in the createDeployment ([b321d54](https://github.com/roger-protocol/roger-specs/commit/b321d54ace3d24afcbc091358d98ce8e9d7770c4))
+* make token_type_hint as per RFC 7009 ([190c6e4](https://github.com/roger-protocol/roger-specs/commit/190c6e4f2827c68dc96c5892a33a7e6f5ef72b5d))
+* mark all request bodies as required accross all endpoints ([2d1fa08](https://github.com/roger-protocol/roger-specs/commit/2d1fa082e897282079504e85df8f0c7d3f032e0d))
+* register OpenAPI components and normalize field names ([a5b1bbb](https://github.com/roger-protocol/roger-specs/commit/a5b1bbb355203ac70394a79dffe216efa92b443b))
+
 ## [0.3.0-beta.2](https://github.com/roger-protocol/roger-specs/compare/v0.3.0-beta.1...v0.3.0-beta.2) (2026-11-12)
 
 ### Features
