@@ -101,7 +101,7 @@ apiRegistry.registerPath({
 
 // Rotate a Storage Object
 export const RotateStorageObjectRequestBody = z
-  .union([S3Credentials])
+  .discriminatedUnion("kind", [S3Credentials])
   .openapi("RotateStorageObjectRequestBody");
 export const RotateStorageObjectRequestURLParams = z.object({
   storageId: StorageId,

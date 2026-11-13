@@ -39,6 +39,7 @@ export const RotateCredentialURLParams = z.object({
 });
 const RotateCredentialBodyApiKey = z
   .object({
+    kind: z.literal("api-key"),
     secret_key: z.string().openapi({
       description: "The API Key secret key",
       example: "ai3ypnLUgkuOqm9uG978X+xetx9rDowo9G4DtQQIlKY...",
@@ -46,7 +47,7 @@ const RotateCredentialBodyApiKey = z
   })
   .openapi("APIKeySecret", { title: "API Key" });
 export const RotateCredentialBody = z
-  .union([RotateCredentialBodyApiKey])
+  .discriminatedUnion("kind", [RotateCredentialBodyApiKey])
   .openapi("RotateCredentialRequestBody");
 
 export const DeleteCredentialURLParams = z.object({

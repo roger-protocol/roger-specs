@@ -36,6 +36,7 @@ const StorageBase = z.object({
 
 export const S3Credentials = z
   .object({
+    kind: z.literal("S3"),
     access_key_id: z
       .string()
       .openapi({ description: "The S3 access key id", example: "SomeAccessKeyId" }),
