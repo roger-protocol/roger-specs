@@ -15,9 +15,7 @@ const EnvironmentBaseSchema = z.object({
 });
 
 const UniverseEnvironmentSchema = EnvironmentBaseSchema.extend({
-  kind: z
-    .literal("universe")
-    .meta({ description: "The type of ressource the environment manages" }),
+  kind: z.literal("universe").meta({ description: "The type of resource the environment manages" }),
   socialLinks: z
     .array(SocialLink)
     .optional()
@@ -38,7 +36,7 @@ const UniverseEnvironmentSchema = EnvironmentBaseSchema.extend({
 });
 
 const PlaceEnvironmentSchema = EnvironmentBaseSchema.extend({
-  kind: z.literal("place").meta({ description: "The type of ressource the environment manages" }),
+  kind: z.literal("place").meta({ description: "The type of resource the environment manages" }),
   branches: BranchesArray,
   place: z.record(z.string(), PlaceSchema).refine((places) => Object.keys(places).length === 1, {
     error: "An environment of kind 'place' must contain exactly one place",

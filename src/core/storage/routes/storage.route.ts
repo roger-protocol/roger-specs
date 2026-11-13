@@ -82,7 +82,7 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfull renamed the storage object", StorageObject),
+    200: createResponseObject("Successfully renamed the storage object", StorageObject),
     400: InvalidRequestError,
     401: UnauthorizedError,
     403: ForbiddenError,
@@ -112,7 +112,7 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfull rotated the storage object", StorageObject),
+    200: createResponseObject("Successfully rotated the storage object", StorageObject),
     400: InvalidRequestError,
     401: UnauthorizedError,
     403: ForbiddenError,
@@ -139,7 +139,7 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfull deleted the storage object", StorageObject),
+    200: createResponseObject("Successfully deleted the storage object", StorageObject),
     400: InvalidRequestError,
     401: UnauthorizedError,
     403: ForbiddenError,

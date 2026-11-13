@@ -15,7 +15,7 @@ const UserStorageOwner = z
 export const StorageOwner = z
   .discriminatedUnion("kind", [UserStorageOwner])
   .openapi("StorageOwner", {
-    description: "An object representing the ressource that owns the storage object",
+    description: "An object representing the resource that owns the storage object",
   });
 
 const StorageBase = z.object({

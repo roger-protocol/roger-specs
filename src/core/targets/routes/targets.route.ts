@@ -78,9 +78,9 @@ apiRegistry.registerPath({
 apiRegistry.registerPath({
   method: "put",
   path: "/projects/{projectId}/environments/{environmentId}/targets/{name}",
-  operationId: "changeTargetRessourceId",
-  summary: "Edit Target Ressource ID",
-  description: "Change the id of the ressource the target is pointing to",
+  operationId: "changeTargetResourceId",
+  summary: "Edit Target Resource ID",
+  description: "Change the id of the resource the target is pointing to",
   tags: [TargetsTag],
   request: {
     params: EditTargetURLParams,
