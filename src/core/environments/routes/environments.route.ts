@@ -7,7 +7,7 @@ import { InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors
 import z from "zod";
 import { EnvironmentId } from "../schemas/ids.schema";
 
-export const GetEnvironmentsURLParams = z.object({ projectId: ProjectId });
+export const ListEnvironmentsURLParams = z.object({ projectId: ProjectId });
 
 export const CreateEnvironmentURLParams = z.object({ projectId: ProjectId });
 export const CreateEnvironmentRequestBody = Environment.pick({
@@ -30,7 +30,7 @@ apiRegistry.registerPath({
   description: "List every environments in a given project",
   tags: [EnvironmentsTag],
   security: [{ [BearerAuth]: [] }],
-  request: { params: GetEnvironmentsURLParams },
+  request: { params: ListEnvironmentsURLParams },
   responses: {
     200: createResponseObject("Successfully returned all of the environments", Environment),
     401: UnauthorizedError,

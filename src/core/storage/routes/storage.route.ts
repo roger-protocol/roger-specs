@@ -7,7 +7,7 @@ import { ErrorResponse, InvalidRequestError, NotFoundError, ServerError } from "
 import { StorageId } from "../schemas/ids.schema";
 
 // Get Storage Objects
-export const GetStorageObjectsResponseBody = z.array(StorageObject);
+export const ListStorageObjectsResponseBody = z.array(StorageObject);
 
 apiRegistry.registerPath({
   method: "get",
@@ -20,7 +20,7 @@ apiRegistry.registerPath({
   responses: {
     200: createResponseObject(
       "Successfully returned storage objects",
-      GetStorageObjectsResponseBody,
+      ListStorageObjectsResponseBody,
     ),
     401: UnauthorizedError,
     403: ForbiddenError,

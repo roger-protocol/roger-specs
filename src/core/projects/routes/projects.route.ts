@@ -6,7 +6,7 @@ import { Project } from "../schemas/project.schema";
 import { ErrorResponse, InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors";
 import { ProjectId } from "../schemas/ids.schemas";
 
-export const GetProjectsResponse = z.array(Project);
+export const ListProjectsResponseBody = z.array(Project);
 
 export const CreateProjectBody = Project.pick({ name: true, kind: true, storage_id: true });
 
@@ -26,7 +26,7 @@ apiRegistry.registerPath({
   responses: {
     200: createResponseObject(
       "Successfully returned all of the account's projects",
-      GetProjectsResponse,
+      ListProjectsResponseBody,
     ),
     401: UnauthorizedError,
     500: ServerError,
