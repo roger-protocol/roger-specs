@@ -17,7 +17,7 @@ export const CreateTargetURLParams = z.object({
   projectId: ProjectId,
   environmentId: EnvironmentId,
 });
-export const CreateTargetBody = PlaceTarget.pick({ name: true, place_id: true });
+export const CreateTargetBody = PlaceTarget.pick({ kind: true, name: true, place_id: true });
 
 export const EditTargetURLParams = z.object({
   projectId: ProjectId,
