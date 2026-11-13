@@ -55,7 +55,10 @@ apiRegistry.registerPath({
   security: [{ [BearerAuth]: [] }],
   request: {
     params: CreateEnvironmentURLParams,
-    body: { content: { "application/json": { schema: CreateEnvironmentRequestBody } } },
+    body: {
+      required: true,
+      content: { "application/json": { schema: CreateEnvironmentRequestBody } },
+    },
   },
   responses: {
     200: createResponseObject("Successfully created the environment", Environment),

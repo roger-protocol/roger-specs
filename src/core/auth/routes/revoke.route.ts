@@ -21,6 +21,7 @@ apiRegistry.registerPath({
   description: "Revoke a session using a refresh token / access token",
   request: {
     body: {
+      required: true,
       content: {
         "application/x-www-form-urlencoded": {
           schema: RevokeEndpointRequestBody,

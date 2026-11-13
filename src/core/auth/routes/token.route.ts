@@ -52,6 +52,7 @@ apiRegistry.registerPath({
     "Exchange the authorization code / refresh token issued by the node for a JWT + refresh token",
   request: {
     body: {
+      required: true,
       content: {
         "application/x-www-form-urlencoded": { schema: TokenEndpointRequestBody },
       },

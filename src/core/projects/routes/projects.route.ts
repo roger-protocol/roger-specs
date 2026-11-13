@@ -42,7 +42,7 @@ apiRegistry.registerPath({
   tags: [ProjectTag],
   security: [{ [BearerAuth]: [] }],
   request: {
-    body: { content: { "application/json": { schema: CreateProjectBody } } },
+    body: { required: true, content: { "application/json": { schema: CreateProjectBody } } },
   },
   responses: {
     200: createResponseObject("Successfully created the project", Project),
@@ -66,6 +66,7 @@ apiRegistry.registerPath({
   security: [{ [BearerAuth]: [] }],
   request: {
     body: {
+      required: true,
       content: { "application/json": { schema: RenameProjectBody } },
     },
     params: RenameProjectURLParams,

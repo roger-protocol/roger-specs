@@ -49,7 +49,12 @@ apiRegistry.registerPath({
   summary: "Create a Storage Object",
   description: "Create a new storage object under your account",
   tags: [StorageTag],
-  request: { body: { content: { "application/json": { schema: LinkStorageObjectRequestBody } } } },
+  request: {
+    body: {
+      required: true,
+      content: { "application/json": { schema: LinkStorageObjectRequestBody } },
+    },
+  },
   security: [{ [BearerAuth]: [] }],
   responses: {
     200: createResponseObject("Successfull linked the new storage object", StorageObject),
@@ -78,7 +83,10 @@ apiRegistry.registerPath({
   tags: [StorageTag],
   request: {
     params: RenameStorageObjectRequestURLParams,
-    body: { content: { "application/json": { schema: RenameStorageObjectRequestBody } } },
+    body: {
+      required: true,
+      content: { "application/json": { schema: RenameStorageObjectRequestBody } },
+    },
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
@@ -108,7 +116,10 @@ apiRegistry.registerPath({
   tags: [StorageTag],
   request: {
     params: RotateStorageObjectRequestURLParams,
-    body: { content: { "application/json": { schema: RotateStorageObjectRequestBody } } },
+    body: {
+      required: true,
+      content: { "application/json": { schema: RotateStorageObjectRequestBody } },
+    },
   },
   security: [{ [BearerAuth]: [] }],
   responses: {

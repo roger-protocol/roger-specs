@@ -77,7 +77,10 @@ apiRegistry.registerPath({
   tags: [DeploymentsTag],
   request: {
     params: CreateDeploymentURLParams,
-    body: { content: { "multipart/form-data": { schema: CreateDeploymentRequestBody } } },
+    body: {
+      required: true,
+      content: { "multipart/form-data": { schema: CreateDeploymentRequestBody } },
+    },
   },
   security: [{ [BearerAuth]: [] }],
   responses: {

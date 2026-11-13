@@ -62,7 +62,7 @@ apiRegistry.registerPath({
   tags: [TargetsTag],
   request: {
     params: CreateTargetURLParams,
-    body: { content: { "application/json": { schema: CreateTargetBody } } },
+    body: { required: true, content: { "application/json": { schema: CreateTargetBody } } },
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
@@ -84,7 +84,7 @@ apiRegistry.registerPath({
   tags: [TargetsTag],
   request: {
     params: EditTargetURLParams,
-    body: { content: { "application/json": { schema: EditTargetBody } } },
+    body: { required: true, content: { "application/json": { schema: EditTargetBody } } },
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
