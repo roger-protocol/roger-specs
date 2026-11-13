@@ -7,11 +7,11 @@ import { Deployment } from "../schemas/deployment.schema";
 import { ErrorResponse, InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors";
 import { DeploymentId } from "../schemas/ids.schema";
 
-// Get Deployments
-export const GetDeploymentsURLParams = z.object({
+// List Deployments
+export const ListDeploymentsURLParams = z.object({
   projectId: ProjectId,
 });
-export const GetDeploymentsResponseBody = z.array(Deployment);
+export const ListDeploymentsResponseBody = z.array(Deployment);
 
 apiRegistry.registerPath({
   method: "get",
@@ -20,10 +20,10 @@ apiRegistry.registerPath({
   summary: "List Deployments",
   description: "Return an array of every deployments in a project",
   tags: [DeploymentsTag],
-  request: { params: GetDeploymentsURLParams },
+  request: { params: ListDeploymentsURLParams },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully returned deployments", GetDeploymentsResponseBody),
+    200: createResponseObject("Successfully returned deployments", ListDeploymentsResponseBody),
     400: InvalidRequestError,
     401: UnauthorizedError,
     403: ForbiddenError,

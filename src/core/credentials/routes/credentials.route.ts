@@ -7,10 +7,10 @@ import { ApiKeyCredential, Credential } from "../schemas/credential.schema";
 import { ErrorResponse, InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors";
 import { CredentialId } from "../schemas/ids.schemas";
 
-export const GetCredentialsURLParams = z.object({
+export const ListCredentialsURLParams = z.object({
   projectId: ProjectId,
 });
-export const GetCredentialsResonseBody = z.array(Credential);
+export const ListCredentialsResponseBody = z.array(Credential);
 
 export const CreateCredentialURLParams = z.object({
   projectId: ProjectId,
@@ -61,10 +61,10 @@ apiRegistry.registerPath({
   summary: "List every Credentials",
   description: "List every credentials linked to one project",
   tags: [CredentialsTag],
-  request: { params: GetCredentialsURLParams },
+  request: { params: ListCredentialsURLParams },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully listed credentials", GetCredentialsResonseBody),
+    200: createResponseObject("Successfully listed credentials", ListCredentialsResponseBody),
     400: InvalidRequestError,
     401: UnauthorizedError,
     403: ForbiddenError,

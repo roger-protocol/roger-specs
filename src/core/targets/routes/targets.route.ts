@@ -7,7 +7,8 @@ import { BearerAuth, ForbiddenError, UnauthorizedError } from "@/core/auth/const
 import { PlaceTarget, Target } from "../schemas/target.schema";
 import { ErrorResponse, InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors";
 
-export const GetTargetsURLParams = z.object({
+
+export const ListTargetsURLParams = z.object({
   projectId: ProjectId,
   environmentId: EnvironmentId,
 });
@@ -39,7 +40,7 @@ apiRegistry.registerPath({
   description: "Get a list of all targets linked to one environment",
   tags: [TargetsTag],
   request: {
-    params: GetTargetsURLParams,
+    params: ListTargetsURLParams,
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
