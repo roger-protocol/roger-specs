@@ -8,6 +8,7 @@ import z from "zod";
 import { EnvironmentId } from "../schemas/ids.schema";
 
 export const ListEnvironmentsURLParams = z.object({ projectId: ProjectId });
+export const ListEnvironmentsRequestBody = z.array(Environment);
 
 export const CreateEnvironmentURLParams = z.object({ projectId: ProjectId });
 export const CreateEnvironmentRequestBody = Environment.pick({
@@ -32,7 +33,10 @@ apiRegistry.registerPath({
   security: [{ [BearerAuth]: [] }],
   request: { params: ListEnvironmentsURLParams },
   responses: {
-    200: createResponseObject("Successfully returned all of the environments", Environment),
+    200: createResponseObject(
+      "Successfully returned all of the environments",
+      ListEnvironmentsRequestBody,
+    ),
     401: UnauthorizedError,
     403: ForbiddenError,
     404: NotFoundError,

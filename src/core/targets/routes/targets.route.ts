@@ -7,7 +7,7 @@ import { BearerAuth, ForbiddenError, UnauthorizedError } from "@/core/auth/const
 import { PlaceTarget, Target } from "../schemas/target.schema";
 import { ErrorResponse, InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors";
 
-
+export const ListTargetsResponseBody = z.array(Target);
 export const ListTargetsURLParams = z.object({
   projectId: ProjectId,
   environmentId: EnvironmentId,
@@ -44,7 +44,7 @@ apiRegistry.registerPath({
   },
   security: [{ [BearerAuth]: [] }],
   responses: {
-    200: createResponseObject("Successfully retrieved targets", Target),
+    200: createResponseObject("Successfully retrieved targets", ListTargetsResponseBody),
     400: InvalidRequestError,
     401: UnauthorizedError,
     403: ForbiddenError,
