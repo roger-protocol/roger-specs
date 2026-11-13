@@ -62,7 +62,6 @@ export const CreateDeploymentRequestBody = z.object({
     )
     .optional()
     .openapi({
-      format: "binary",
       description:
         "An array of zipped rbxl binaries, one per place. Each part must use the place name as it's filename",
     }),
