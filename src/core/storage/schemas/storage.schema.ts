@@ -1,26 +1,8 @@
 import z from "zod";
 import { StorageId } from "./ids.schema";
-import { UserId } from "@/core/auth";
-
-const UserStorageOwner = z
-  .object({
-    kind: z.literal("user").openapi({
-      description: "The type of owner that owns the storage object",
-      example: "user",
-    }),
-    id: UserId,
-  })
-  .openapi("UserStorageOwner", { title: "User" });
-
-export const StorageOwner = z
-  .discriminatedUnion("kind", [UserStorageOwner])
-  .openapi("StorageOwner", {
-    description: "An object representing the resource that owns the storage object",
-  });
 
 const StorageBase = z.object({
   id: StorageId,
-  owner: StorageOwner,
   name: z.string().openapi({
     description: "The human-friendly display name of the storage object",
     example: "Main Storage",
@@ -31,6 +13,14 @@ const StorageBase = z.object({
   status_message: z.string().optional().openapi({
     description: "An optional message attached to the storage object status",
     example: "Storage almost full (85% used)",
+  }),
+  created_at: z.iso.datetime().openapi({
+    description: "The ISO timestamp at which the S3 storage bucket was registered on the node",
+    example: "2026-09-06T14:47:42.239Z",
+  }),
+  updated_at: z.iso.datetime().openapi({
+    description: "The ISO timestamp when the S3 storage bucket was last updated on the node",
+    example: "2026-09-06T16:31:52.845Z",
   }),
 });
 
@@ -61,14 +51,6 @@ export const S3StorageObject = StorageBase.extend({
   region: z
     .string()
     .openapi({ description: "The region of your S3 bucket", example: "eu-central" }),
-  created_at: z.iso.datetime().openapi({
-    description: "The ISO timestamp at which the S3 storage bucket was registered on the node",
-    example: "2026-09-06T14:47:42.239Z",
-  }),
-  updated_at: z.iso.datetime().openapi({
-    description: "The ISO timestamp when the S3 storage bucket was last updated on the node",
-    example: "2026-09-06T16:31:52.845Z",
-  }),
 }).openapi("S3CompatibleStorage", { title: "S3 Compatible" });
 
 export const InternalStorageObject = StorageBase.extend({
@@ -82,10 +64,6 @@ export const InternalStorageObject = StorageBase.extend({
   storage_used: z.int().min(0).openapi({
     description: "The number of bytes used in the internal storage object (base-2)",
     example: 1_073_741_824,
-  }),
-  updated_at: z.iso.datetime().openapi({
-    description: "The ISO timestamp when the internal storage object was last updated",
-    example: "2026-09-06T16:31:52.845Z",
   }),
 }).openapi("InternalStorage", { title: "Internal" });
 
