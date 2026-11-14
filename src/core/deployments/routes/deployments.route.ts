@@ -6,6 +6,7 @@ import { BearerAuth, ForbiddenError, UnauthorizedError } from "@/core/auth/const
 import { Deployment } from "../schemas/deployment.schema";
 import { ErrorResponse, InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors";
 import { DeploymentId } from "../schemas/ids.schema";
+import { ManifestSchema } from "@/core/manifest";
 
 // List Deployments
 export const ListDeploymentsURLParams = z.object({
@@ -40,31 +41,18 @@ export const CreateDeploymentRequestBody = z.object({
   environment_id: Deployment.shape.environment_id,
   version: Deployment.shape.version,
   action: z.enum(["deploy", "stage"]).openapi({
-    description: "The action that should be done on the deployment after upload",
+    description: "The action that should be done on the deployment after creation",
     example: "stage",
   }),
-  config: z
-    .any()
-    .openapi({ type: "string", format: "binary", description: "The roger.yml config file" }),
-  place_hashes: z.string().optional().openapi({
+  manifest: ManifestSchema,
+  place_hashes: z.record(z.string(), z.string()).openapi({
     description:
-      "A stringified JSON object mapping place names to artifact hashes already stored on the server (checked via the /artifacts/check route)",
-    example: '{"lobby": "abc123...", "arena": "def456..."}',
+      "A map of every place name declared in the manifest to their uploaded artifact hash",
+    example: {
+      lobby: "f3a1ef5671fbafb086ed06a5be7c091f39ef8cebae9dd0b160ec4d68e5b322db",
+      arena: "c01eaf870848a93224426b8eed25702982f4cce01459c8a53874eccb22fe8a0e",
+    },
   }),
-  places: z
-    .array(
-      z.any().openapi({
-        type: "string",
-        format: "binary",
-        description:
-          "A zipped .rbxl binary. The filename parameter in the Content-Disposition header must match the target place name in the config file",
-      }),
-    )
-    .optional()
-    .openapi({
-      description:
-        "An array of zipped rbxl binaries, one per place. Each part must use the place name as it's filename",
-    }),
 });
 
 apiRegistry.registerPath({
@@ -78,7 +66,7 @@ apiRegistry.registerPath({
     params: CreateDeploymentURLParams,
     body: {
       required: true,
-      content: { "multipart/form-data": { schema: CreateDeploymentRequestBody } },
+      content: { "application/json": { schema: CreateDeploymentRequestBody } },
     },
   },
   security: [{ [BearerAuth]: [] }],

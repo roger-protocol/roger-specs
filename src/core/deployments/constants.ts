@@ -20,4 +20,8 @@ export const DeploymentsConfig = z.object({
     description: "The maximum place file (.rbxl) size in bytes (base-2)",
     example: 5_368_709_120,
   }),
+  artifactHashingAlgorithm: z.enum(["sha256", "blake3"]).openapi({
+    description: "The hashing algorithm used by the node to hash artifacts",
+    example: "blake3",
+  }),
 });
