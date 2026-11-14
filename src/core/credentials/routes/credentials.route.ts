@@ -3,7 +3,7 @@ import { CredentialsTag } from "../constants";
 import z from "zod";
 import { ProjectId } from "@/core/projects";
 import { BearerAuth, ForbiddenError, UnauthorizedError } from "@/core/auth/constants";
-import { ApiKeyCredential, Credential } from "../schemas/credential.schema";
+import { ApiKeyCredential, APIKeySecrets, Credential } from "../schemas/credential.schema";
 import { ErrorResponse, InvalidRequestError, NotFoundError, ServerError } from "@/shared/errors";
 import { CredentialId } from "../schemas/ids.schemas";
 
@@ -16,12 +16,7 @@ export const CreateCredentialURLParams = z.object({
   projectId: ProjectId,
 });
 const CreateCredentialBodyApiKey = ApiKeyCredential.pick({ name: true, kind: true })
-  .extend({
-    secret_key: z.string().openapi({
-      description: "The API Key secret key",
-      example: "ai3ypnLUgkuOqm9uG978X+xetx9rDowo9G4DtQQIlKY...",
-    }),
-  })
+  .extend(APIKeySecrets.shape)
   .openapi("APIKeyInfos", { title: "API Key" });
 export const CreateCredentialRequestBody = z
   .discriminatedUnion("kind", [CreateCredentialBodyApiKey])
@@ -38,13 +33,8 @@ export const RotateCredentialURLParams = z.object({
   credentialId: CredentialId,
 });
 const RotateCredentialBodyApiKey = z
-  .object({
-    kind: z.literal("api-key"),
-    secret_key: z.string().openapi({
-      description: "The API Key secret key",
-      example: "ai3ypnLUgkuOqm9uG978X+xetx9rDowo9G4DtQQIlKY...",
-    }),
-  })
+  .object({ kind: z.literal("api-key") })
+  .extend(APIKeySecrets.shape)
   .openapi("APIKeySecret", { title: "API Key" });
 export const RotateCredentialBody = z
   .discriminatedUnion("kind", [RotateCredentialBodyApiKey])
