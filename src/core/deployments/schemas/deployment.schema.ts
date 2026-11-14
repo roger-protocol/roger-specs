@@ -15,7 +15,12 @@ export const Deployment = z
     version: z
       .string()
       .openapi({ description: "The deployment version string", example: "v2.3.1-hotfix" }),
-    status: DeploymentStatus,
+    status: DeploymentStatus.openapi({ example: "error" }),
+    status_message: z.string().optional().openapi({
+      description: "An optional message attached to the deployment status",
+      example:
+        'Failed to upload place "lobby": the environment\'s credential lacks the necessary permissions',
+    }),
     last_deployment: DeploymentId.optional().openapi({
       description: "The ID of the last active deployment",
     }),
