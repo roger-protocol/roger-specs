@@ -17,4 +17,5 @@ export const ProjectsConfig = z.object({
   supportedProjectKinds: z
     .array(Project.shape.kind)
     .openapi({ description: "All project kinds supported by this node", example: ["game"] }),
+  artifactHashingAlgorithm: z.enum(["sha256", "blake3"]),
 });
