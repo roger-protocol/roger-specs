@@ -43,13 +43,15 @@ const PlaceEnvironmentSchema = EnvironmentBaseSchema.extend({
   }),
 });
 
-export const ManifestSchema = z.object({
-  node: z.url().meta({ description: "The base URL of the node in charge of your project" }),
-  project: ProjectId.meta({ description: "The ID of the target roger project" }),
-  environments: z
-    .record(
-      z.string().meta({ description: "The target project's environment name" }),
-      z.discriminatedUnion("kind", [UniverseEnvironmentSchema, PlaceEnvironmentSchema]),
-    )
-    .meta({ description: "Map environment names to their configuration" }),
-});
+export const ManifestSchema = z
+  .object({
+    node: z.url().meta({ description: "The base URL of the node in charge of your project" }),
+    project: ProjectId.meta({ description: "The ID of the target roger project" }),
+    environments: z
+      .record(
+        z.string().meta({ description: "The target project's environment name" }),
+        z.discriminatedUnion("kind", [UniverseEnvironmentSchema, PlaceEnvironmentSchema]),
+      )
+      .meta({ description: "Map environment names to their configuration" }),
+  })
+  .openapi("Manifest");

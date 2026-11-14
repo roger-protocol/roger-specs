@@ -1,5 +1,6 @@
 // Routes
 export * from "./routes/deployments.route";
+export * from "./routes/artifacts.route";
 
 // Schemas
 export * from "./schemas/deployment.schema";
