@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.0-beta.4](https://github.com/roger-protocol/roger-specs/compare/v0.3.0-beta.3...v0.3.0-beta.4) (2026-11-14)
+
+### Features
+
+* add artifactHashingAlgorithm entry to the projects config schema ([7d2d5fc](https://github.com/roger-protocol/roger-specs/commit/7d2d5fcb968f4afdf3de7822548cbb993c319e17))
+* add status_message field to the Deployment schema ([9582f34](https://github.com/roger-protocol/roger-specs/commit/9582f342210a23763db0f5e6a9325cc6de51d8da))
+* change deployment creation flow and move artifacts route under the ([5d1751a](https://github.com/roger-protocol/roger-specs/commit/5d1751a312169e917583a3e08e34e7dbcf2d8237))
+* remove owner field from storage objects and bring created_at field ([4c97bb9](https://github.com/roger-protocol/roger-specs/commit/4c97bb9b86d54dd37dd16784082fe6e3de508f96))
+
+### Bug Fixes
+
+* add id field to credentials (oops) and make expires_at optional for ([5f949af](https://github.com/roger-protocol/roger-specs/commit/5f949afac87b5814cd800c3c59718376f04e38d4))
+
 ## [0.3.0-beta.3](https://github.com/roger-protocol/roger-specs/compare/v0.3.0-beta.2...v0.3.0-beta.3) (2026-11-13)
 
 ### Features
