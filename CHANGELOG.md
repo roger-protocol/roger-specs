@@ -1,5 +1,35 @@
 # Changelog
 
+## [0.3.0](https://github.com/roger-protocol/roger-specs/compare/v0.2.2...v0.3.0) (2026-11-18)
+
+### Features
+
+* add artifactHashingAlgorithm entry to the projects config schema ([da9c2b1](https://github.com/roger-protocol/roger-specs/commit/da9c2b10db9179a1596d19267221889d70dd4155))
+* add error codes to the /auth/oauth route ([c59898d](https://github.com/roger-protocol/roger-specs/commit/c59898dfef7c59a39960cdee95194fca3326487c))
+* add response_type to /auth/oauth as per RFC 6749 section 4.2.1 ([9fcb8b6](https://github.com/roger-protocol/roger-specs/commit/9fcb8b61cf04e9659503f4396370157914b3d7ac))
+* add status_message field to the Deployment schema ([56f57b7](https://github.com/roger-protocol/roger-specs/commit/56f57b72873d455dfeaf19338792cb4f8aae36b1))
+* change all unions for discriminatedUnions ([245782e](https://github.com/roger-protocol/roger-specs/commit/245782efc50cb4e558ccaabf5cced0bc8f330ecf))
+* change deployment creation flow and move artifacts route under the ([69f571b](https://github.com/roger-protocol/roger-specs/commit/69f571bc92e8d0125bee5880b2cb8efca166b6e5))
+* make error_description optional ([b85f389](https://github.com/roger-protocol/roger-specs/commit/b85f389d680b6eb0158d93073c8f25cd108cd190))
+* make every union schemas components ([6f259f1](https://github.com/roger-protocol/roger-specs/commit/6f259f179b63bae0141ade6caf6f1ce1904586f2))
+* make state optional in /auth/oauth as per RFC 6749 Section 4.1.1 ([dbf2f27](https://github.com/roger-protocol/roger-specs/commit/dbf2f27f6d134396d8834e049e7f285930905b1b))
+* register manifest schemas as components ([4d727b2](https://github.com/roger-protocol/roger-specs/commit/4d727b2d82d1c62ae52c93ce8a208f2786d73025))
+* remove owner field from storage objects and bring created_at field ([f5d7b4f](https://github.com/roger-protocol/roger-specs/commit/f5d7b4f7b753395ef02d2963bd4c37c7848905dd))
+* replace domain specific error schemas by a global error schema ([a6dd565](https://github.com/roger-protocol/roger-specs/commit/a6dd565e32bf00a8690a4be8654a9a4b64b0de1d))
+* require the token endpoint to return a refresh_token ([2034812](https://github.com/roger-protocol/roger-specs/commit/20348121d4ba60adaf77e38ce35386675d4e6659))
+
+### Bug Fixes
+
+* add id field to credentials (oops) and make expires_at optional for ([0facbfa](https://github.com/roger-protocol/roger-specs/commit/0facbfa7f579213a1cc939418e038398a4e43893))
+* change authentication routes body content type from json to ([20b84ee](https://github.com/roger-protocol/roger-specs/commit/20b84eec1b4d669aa8d94d8075af0a9f46133d93))
+* fix list response schemas being of type "object" instead of type ([714473c](https://github.com/roger-protocol/roger-specs/commit/714473cd2b164f928bc85b4190959b5beb80a442))
+* fix the whole place array marked as binary in the createDeployment ([b317d81](https://github.com/roger-protocol/roger-specs/commit/b317d81e3674a03c43850fed9963e49364107124))
+* incorrect use of "in" to check if a key is in a map ([2dc4675](https://github.com/roger-protocol/roger-specs/commit/2dc467560a4738afac33b7c2c26b8c8a60068b6c))
+* make token_type_hint as per RFC 7009 ([b74851a](https://github.com/roger-protocol/roger-specs/commit/b74851ae569d0edb5a7254e23f8d6f7c10a82c13))
+* mark all request bodies as required accross all endpoints ([9573945](https://github.com/roger-protocol/roger-specs/commit/9573945395efef1df0f8a20cadaa1076bc0ca799))
+* register OpenAPI components and normalize field names ([28920a6](https://github.com/roger-protocol/roger-specs/commit/28920a6afce590164e07c475a6bf2e4ed7973fd6))
+* remove unions when using x-www-form-urlencoded ([bab6aac](https://github.com/roger-protocol/roger-specs/commit/bab6aaccfd624a2bead474be18132ea67a4930bd))
+
 ## [0.3.0-beta.5](https://github.com/roger-protocol/roger-specs/compare/v0.3.0-beta.4...v0.3.0-beta.5) (2026-11-18)
 
 ### Features
