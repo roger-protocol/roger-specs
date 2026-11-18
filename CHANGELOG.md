@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.0-beta.5](https://github.com/roger-protocol/roger-specs/compare/v0.3.0-beta.4...v0.3.0-beta.5) (2026-11-18)
+
+### Features
+
+* register manifest schemas as components ([974ebe7](https://github.com/roger-protocol/roger-specs/commit/974ebe7b8b7238f1f190d9dc105028669fe448a9))
+
 ## [0.3.0-beta.4](https://github.com/roger-protocol/roger-specs/compare/v0.3.0-beta.3...v0.3.0-beta.4) (2026-11-14)
 
 ### Features
