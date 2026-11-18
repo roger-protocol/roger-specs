@@ -33,7 +33,7 @@ const UniverseEnvironmentSchema = EnvironmentBaseSchema.extend({
     .meta({
       description: "A map of place names to their configuration. Must include a 'start' place.",
     }),
-});
+}).openapi("ManifestUniverseEnvironment");
 
 const PlaceEnvironmentSchema = EnvironmentBaseSchema.extend({
   kind: z.literal("place").meta({ description: "The type of resource the environment manages" }),
@@ -41,7 +41,11 @@ const PlaceEnvironmentSchema = EnvironmentBaseSchema.extend({
   place: z.record(z.string(), PlaceSchema).refine((places) => Object.keys(places).length === 1, {
     error: "An environment of kind 'place' must contain exactly one place",
   }),
-});
+}).openapi("ManifestPlaceEnvironment");
+
+const Environment = z
+  .discriminatedUnion("kind", [UniverseEnvironmentSchema, PlaceEnvironmentSchema])
+  .openapi("ManifestEnvironment");
 
 export const ManifestSchema = z
   .object({
@@ -50,7 +54,7 @@ export const ManifestSchema = z
     environments: z
       .record(
         z.string().meta({ description: "The target project's environment name" }),
-        z.discriminatedUnion("kind", [UniverseEnvironmentSchema, PlaceEnvironmentSchema]),
+        Environment,
       )
       .meta({ description: "Map environment names to their configuration" }),
   })
