@@ -14,7 +14,7 @@
   },
   "github": {
     "release": true,
-    "autoGenerate": true,
+    "autoGenerate": false,
     "assets": ["dist/openapi.json", "dist/manifest-schema.json"]
   },
   "plugins": {
