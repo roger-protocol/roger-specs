@@ -71,7 +71,9 @@ jobs:
           if [ "$SKIP_GITHUB" = "true" ]; then FLAGS="$FLAGS --no-github"; fi
           if [ "$SKIP_NPM" = "true" ]; then FLAGS="$FLAGS --no-npm"; fi
 
-          npx release-it --ci $FLAGS
+          TARGET_VERSION=$(node -p "require('./package.json').version.split('-')[0]")
+
+          npx release-it "$TARGET_VERSION" --ci $FLAGS
 
       - name: Deploy Versioned Docs
         if: inputs.dry_run != true
